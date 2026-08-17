@@ -22,6 +22,25 @@ python -m http.server 8000
 
 Order state is derived from the order's `placedAt` timestamp rather than a running timer, so progress stays correct across reloads.
 
+## Branching
+
+```
+feature/<name>  ->  dev  ->  prod
+```
+
+- **`prod`** — released state. Only ever updated by merging `dev`. This is the branch that gets published.
+- **`dev`** — integration branch and the repo default, so pull requests target it unless you say otherwise. Features land here first.
+- **`feature/<name>`** — one per change, branched from `dev`, merged back via pull request.
+
+Starting a feature:
+
+```bash
+git checkout dev && git pull
+git checkout -b feature/my-change
+```
+
+Releasing: open a pull request from `dev` into `prod`.
+
 ## Structure
 
 Everything lives in `index.html`:

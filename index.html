@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kettle &amp; Crumb</title>
+<style>
+  :root {
+    --ground: #FBFAF8;
+    --surface: #FFFFFF;
+    --ink: #17181A;
+    --muted: #6B6F72;
+    --line: #E6E3DD;
+    --accent: #1F6F4A;
+    --accent-ink: #FFFFFF;
+    --shadow: 0 1px 2px rgba(23,24,26,.06), 0 8px 24px rgba(23,24,26,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #131414;
+      --surface: #1B1C1D;
+      --ink: #F2F1EE;
+      --muted: #9A9C9E;
+      --line: #2C2E2F;
+      --accent: #4FC08D;
+      --accent-ink: #10231A;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #131414;
+    --surface: #1B1C1D;
+    --ink: #F2F1EE;
+    --muted: #9A9C9E;
+    --line: #2C2E2F;
+    --accent: #4FC08D;
+    --accent-ink: #10231A;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 32px 20px 72px; }
+
+  header { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 32px; }
+  .brand { font-size: 20px; font-weight: 650; letter-spacing: -.02em; }
+  .brand span { color: var(--accent); }
+  .tag { color: var(--muted); font-size: 13px; }
+
+  h2 {
+    font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+    color: var(--muted); font-weight: 600; margin: 0 0 12px;
+  }
+  section + section { margin-top: 40px; }
+
+  .menu { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+  .item {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+    padding: 14px; display: flex; flex-direction: column; gap: 4px; box-shadow: var(--shadow);
+  }
+  .thumb { font-size: 28px; line-height: 1; margin-bottom: 6px; }
+  .name { font-weight: 550; }
+  .desc { color: var(--muted); font-size: 13px; flex: 1; }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 10px; }
+  .price { font-variant-numeric: tabular-nums; font-weight: 550; }
+
+  button {
+    font: inherit; cursor: pointer; border-radius: 7px; border: 1px solid var(--line);
+    background: var(--surface); color: var(--ink); padding: 6px 12px;
+  }
+  button:hover { border-color: var(--accent); color: var(--accent); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 550; }
+  .primary:hover { color: var(--accent-ink); filter: brightness(1.08); }
+  .primary:disabled { opacity: .4; cursor: not-allowed; filter: none; }
+  .qty { width: 28px; height: 28px; padding: 0; line-height: 1; }
+
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); }
+  .panel > * { padding: 12px 16px; }
+  .panel > * + * { border-top: 1px solid var(--line); }
+  .line { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .line .grow { flex: 1; }
+  .empty { color: var(--muted); font-size: 14px; }
+  .total { font-weight: 650; font-variant-numeric: tabular-nums; }
+  .count { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 18px; text-align: center; }
+
+  .orders { display: flex; flex-direction: column; gap: 12px; }
+  .order-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .oid { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; color: var(--muted); }
+  .summary { color: var(--muted); font-size: 13px; margin-top: 2px; }
+
+  .track { display: flex; gap: 4px; margin-top: 14px; }
+  .step { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .bar { height: 3px; border-radius: 2px; background: var(--line); transition: background .4s ease; }
+  .step.done .bar { background: var(--accent); }
+  .step.now .bar { background: var(--accent); animation: pulse 1.4s ease-in-out infinite; }
+  .step-label { font-size: 11px; color: var(--muted); }
+  .step.done .step-label, .step.now .step-label { color: var(--ink); }
+  @keyframes pulse { 50% { opacity: .35; } }
+  @media (prefers-reduced-motion: reduce) { .step.now .bar { animation: none; } }
+
+  .eta { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .pill {
+    font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 99px; background: var(--line); color: var(--ink);
+  }
+  .pill.live { background: var(--accent); color: var(--accent-ink); }
+
+  footer { margin-top: 48px; color: var(--muted); font-size: 12px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <div class="brand">Kettle &amp; <span>Crumb</span></div>
+      <div class="tag">Demo storefront — no real food, no real money.</div>
+    </div>
+    <button id="reset">Clear demo data</button>
+  </header>
+
+  <section>
+    <h2>Menu</h2>
+    <div class="menu" id="menu"></div>
+  </section>
+
+  <section>
+    <h2>Your order</h2>
+    <div class="panel" id="cart"></div>
+  </section>
+
+  <section>
+    <h2>Tracking</h2>
+    <div class="orders" id="orders"></div>
+  </section>
+
+  <footer>Prototype build · prices and delivery times are simulated</footer>
+</div>
+
+<script>
+const MENU = [
+  { id: 'm1', emoji: '🍜', name: 'Shoyu Ramen',      desc: 'Soy broth, chashu, soft egg',   price: 12.50 },
+  { id: 'm2', emoji: '🍕', name: 'Margherita',       desc: 'San Marzano, fior di latte',    price: 10.00 },
+  { id: 'm3', emoji: '🥗', name: 'Charred Corn Bowl', desc: 'Quinoa, avocado, lime crema',  price: 9.75  },
+  { id: 'm4', emoji: '🌮', name: 'Al Pastor Tacos',  desc: 'Three, pineapple, salsa verde', price: 8.25  },
+  { id: 'm5', emoji: '🍔', name: 'Smash Burger',     desc: 'Double patty, aged cheddar',    price: 11.00 },
+  { id: 'm6', emoji: '🍰', name: 'Basque Cheesecake', desc: 'Burnt top, single slice',      price: 6.50  },
+];
+
+const STAGES = [
+  { label: 'Confirmed',   at: 0  },
+  { label: 'Preparing',   at: 8  },
+  { label: 'On the way',  at: 20 },
+  { label: 'Delivered',   at: 36 },
+];
+const DELIVERED_AT = STAGES[STAGES.length - 1].at;
+const DELIVERY_FEE = 2.50;
+const KEY = 'kc-demo-v1';
+
+const money = n => '$' + n.toFixed(2);
+const byId = id => MENU.find(m => m.id === id);
+const el = document.getElementById.bind(document);
+
+let cart = {};            // { itemId: qty }
+let orders = load();      // newest first
+
+function load() {
+  try { return JSON.parse(localStorage.getItem(KEY)) || []; }
+  catch { return []; }
+}
+function save() {
+  localStorage.setItem(KEY, JSON.stringify(orders));
+}
+
+/* ---------- menu ---------- */
+
+el('menu').innerHTML = MENU.map(m => `
+  <div class="item">
+    <div class="thumb" aria-hidden="true">${m.emoji}</div>
+    <div class="name">${m.name}</div>
+    <div class="desc">${m.desc}</div>
+    <div class="row">
+      <span class="price">${money(m.price)}</span>
+      <button data-add="${m.id}">Add</button>
+    </div>
+  </div>
+`).join('');
+
+/* ---------- cart ---------- */
+
+function cartLines() {
+  return Object.entries(cart).map(([id, qty]) => ({ item: byId(id), qty }));
+}
+function cartSubtotal() {
+  return cartLines().reduce((s, l) => s + l.item.price * l.qty, 0);
+}
+
+function renderCart() {
+  const lines = cartLines();
+  const box = el('cart');
+
+  if (!lines.length) {
+    box.innerHTML = '<div class="empty">Nothing added yet. Pick something from the menu.</div>';
+    return;
+  }
+
+  const subtotal = cartSubtotal();
+  box.innerHTML = lines.map(l => `
+    <div class="line">
+      <span class="grow">${l.item.emoji} ${l.item.name}</span>
+      <button class="qty" data-dec="${l.item.id}" aria-label="Remove one ${l.item.name}">−</button>
+      <span class="count">${l.qty}</span>
+      <button class="qty" data-add="${l.item.id}" aria-label="Add one ${l.item.name}">+</button>
+      <span class="price">${money(l.item.price * l.qty)}</span>
+    </div>
+  `).join('') + `
+    <div class="line"><span class="grow eta">Delivery</span><span class="price">${money(DELIVERY_FEE)}</span></div>
+    <div class="line">
+      <span class="grow total">Total ${money(subtotal + DELIVERY_FEE)}</span>
+      <button class="primary" id="place">Place order</button>
+    </div>
+  `;
+}
+
+/* ---------- orders ---------- */
+
+function placeOrder() {
+  const lines = cartLines();
+  if (!lines.length) return;
+
+  orders.unshift({
+    id: 'KC-' + String(Math.floor(Math.random() * 9000) + 1000),
+    placedAt: Date.now(),
+    total: cartSubtotal() + DELIVERY_FEE,
+    lines: lines.map(l => ({ emoji: l.item.emoji, name: l.item.name, qty: l.qty })),
+  });
+
+  cart = {};
+  save();
+  renderCart();
+  renderOrders();
+}
+
+function stageOf(order) {
+  const secs = (Date.now() - order.placedAt) / 1000;
+  let i = 0;
+  STAGES.forEach((s, n) => { if (secs >= s.at) i = n; });
+  return { index: i, secs };
+}
+
+function renderOrders() {
+  const box = el('orders');
+
+  if (!orders.length) {
+    box.innerHTML = '<div class="panel"><div class="empty">No orders yet. Placed orders show live tracking here.</div></div>';
+    return;
+  }
+
+  box.innerHTML = orders.map(o => {
+    const { index, secs } = stageOf(o);
+    const delivered = index === STAGES.length - 1;
+    const left = Math.max(0, Math.ceil(DELIVERED_AT - secs));
+
+    return `
+      <div class="panel">
+        <div>
+          <div class="order-head">
+            <div>
+              <span class="oid">${o.id}</span>
+              <span class="pill ${delivered ? '' : 'live'}">${STAGES[index].label}</span>
+            </div>
+            <span class="total">${money(o.total)}</span>
+          </div>
+          <div class="summary">${o.lines.map(l => `${l.emoji} ${l.name} ×${l.qty}`).join(' · ')}</div>
+
+          <div class="track">
+            ${STAGES.map((s, n) => `
+              <div class="step ${n < index ? 'done' : n === index ? 'now' : ''}">
+                <div class="bar"></div>
+                <div class="step-label">${s.label}</div>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="eta" style="margin-top:10px">
+            ${delivered ? 'Delivered — enjoy.' : `Arriving in about ${left}s`}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* ---------- events ---------- */
+
+document.addEventListener('click', e => {
+  const add = e.target.closest('[data-add]');
+  const dec = e.target.closest('[data-dec]');
+
+  if (add) {
+    const id = add.dataset.add;
+    cart[id] = (cart[id] || 0) + 1;
+    renderCart();
+  } else if (dec) {
+    const id = dec.dataset.dec;
+    cart[id] -= 1;
+    if (cart[id] < 1) delete cart[id];
+    renderCart();
+  } else if (e.target.id === 'place') {
+    placeOrder();
+  } else if (e.target.id === 'reset') {
+    orders = [];
+    cart = {};
+    save();
+    renderCart();
+    renderOrders();
+  }
+});
+
+renderCart();
+renderOrders();
+setInterval(renderOrders, 1000);
+</script>
+</body>
+</html>

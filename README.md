@@ -14,7 +14,7 @@ python -m http.server 8000
 
 ## What it does
 
-- **Menu** — six fixed items with emoji placeholders and dummy prices.
+- **Menu** — twelve items with emoji placeholders and dummy prices, grouped into four categories (Pasta, Pizza, Desi, Thai) with a count per category.
 - **Cart** — add/remove items, quantity per line, subtotal plus a flat $2.50 delivery fee.
 - **Place order** — creates an order with a generated `KC-####` id.
 - **Tracking** — each order advances through Confirmed → Preparing → On the way → Delivered on a simulated timeline (36s end to end), with a live countdown.
@@ -46,7 +46,8 @@ Releasing: open a pull request from `dev` into `prod`.
 Everything lives in `index.html`:
 
 - CSS custom properties at the top define the palette; light and dark themes both defined.
-- `MENU` and `STAGES` constants near the top of the script — edit these to change the catalogue or the tracking timeline.
+- `CATEGORIES`, `MENU`, and `STAGES` constants near the top of the script — edit these to change the sections, the catalogue, or the tracking timeline.
+  - Adding a category: add it to `CATEGORIES` (array order is page order), then tag items with its `id` via their `cat` field. A category with no items is skipped rather than rendered empty.
 - Three render functions: menu (once), `renderCart()`, `renderOrders()` (re-run every second).
 
 ## Not included

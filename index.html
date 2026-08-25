@@ -59,7 +59,15 @@
   }
   section + section { margin-top: 40px; }
 
-  .menu { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+  #menu { display: flex; flex-direction: column; gap: 26px; }
+  .cat-name {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 13px; font-weight: 600; letter-spacing: -.01em;
+    margin: 0 0 10px; color: var(--ink);
+  }
+  .cat-name::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  .cat-count { color: var(--muted); font-weight: 450; font-variant-numeric: tabular-nums; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
   .item {
     background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
     padding: 14px; display: flex; flex-direction: column; gap: 4px; box-shadow: var(--shadow);
@@ -128,7 +136,7 @@
 
   <section>
     <h2>Menu</h2>
-    <div class="menu" id="menu"></div>
+    <div id="menu"></div>
   </section>
 
   <section>
@@ -145,13 +153,30 @@
 </div>
 
 <script>
+// Category order here is the order they appear on the page.
+const CATEGORIES = [
+  { id: 'pasta', name: 'Pasta' },
+  { id: 'pizza', name: 'Pizza' },
+  { id: 'desi',  name: 'Desi'  },
+  { id: 'thai',  name: 'Thai'  },
+];
+
 const MENU = [
-  { id: 'm1', emoji: '🍜', name: 'Shoyu Ramen',      desc: 'Soy broth, chashu, soft egg',   price: 12.50 },
-  { id: 'm2', emoji: '🍕', name: 'Margherita',       desc: 'San Marzano, fior di latte',    price: 10.00 },
-  { id: 'm3', emoji: '🥗', name: 'Charred Corn Bowl', desc: 'Quinoa, avocado, lime crema',  price: 9.75  },
-  { id: 'm4', emoji: '🌮', name: 'Al Pastor Tacos',  desc: 'Three, pineapple, salsa verde', price: 8.25  },
-  { id: 'm5', emoji: '🍔', name: 'Smash Burger',     desc: 'Double patty, aged cheddar',    price: 11.00 },
-  { id: 'm6', emoji: '🍰', name: 'Basque Cheesecake', desc: 'Burnt top, single slice',      price: 6.50  },
+  { id: 'p1', cat: 'pasta', emoji: '🍝', name: 'Carbonara',        desc: 'Guanciale, pecorino, black pepper', price: 11.50 },
+  { id: 'p2', cat: 'pasta', emoji: '🍝', name: 'Penne Arrabbiata', desc: 'Chilli, garlic, San Marzano',       price: 9.75  },
+  { id: 'p3', cat: 'pasta', emoji: '🍄', name: 'Truffle Fettuccine', desc: 'Wild mushroom, cream, parmesan',  price: 13.00 },
+
+  { id: 'z1', cat: 'pizza', emoji: '🍕', name: 'Margherita',       desc: 'San Marzano, fior di latte, basil', price: 10.00 },
+  { id: 'z2', cat: 'pizza', emoji: '🌶️', name: 'Diavola',          desc: 'Spicy salami, chilli oil',          price: 12.00 },
+  { id: 'z3', cat: 'pizza', emoji: '🧀', name: 'Quattro Formaggi', desc: 'Mozzarella, gorgonzola, taleggio',  price: 12.50 },
+
+  { id: 'd1', cat: 'desi',  emoji: '🍛', name: 'Chicken Karahi',   desc: 'Wok-fried, tomato, ginger',         price: 12.75 },
+  { id: 'd2', cat: 'desi',  emoji: '🍚', name: 'Chicken Biryani',  desc: 'Long grain, saffron, raita',        price: 10.50 },
+  { id: 'd3', cat: 'desi',  emoji: '🥘', name: 'Beef Nihari',      desc: 'Slow cooked overnight, naan',       price: 13.25 },
+
+  { id: 't1', cat: 'thai',  emoji: '🍜', name: 'Pad Thai',         desc: 'Rice noodle, tamarind, peanut',     price: 11.00 },
+  { id: 't2', cat: 'thai',  emoji: '🍲', name: 'Green Curry',      desc: 'Coconut, thai basil, jasmine rice', price: 11.75 },
+  { id: 't3', cat: 'thai',  emoji: '🦐', name: 'Tom Yum Goong',    desc: 'Prawn, lemongrass, lime',           price: 12.25 },
 ];
 
 const STAGES = [
@@ -181,7 +206,7 @@ function save() {
 
 /* ---------- menu ---------- */
 
-el('menu').innerHTML = MENU.map(m => `
+const itemCard = m => `
   <div class="item">
     <div class="thumb" aria-hidden="true">${m.emoji}</div>
     <div class="name">${m.name}</div>
@@ -191,7 +216,19 @@ el('menu').innerHTML = MENU.map(m => `
       <button data-add="${m.id}">Add</button>
     </div>
   </div>
-`).join('');
+`;
+
+// A category with no items is skipped rather than rendered empty.
+el('menu').innerHTML = CATEGORIES.map(c => {
+  const items = MENU.filter(m => m.cat === c.id);
+  if (!items.length) return '';
+  return `
+    <div class="cat">
+      <h3 class="cat-name">${c.name} <span class="cat-count">${items.length}</span></h3>
+      <div class="grid">${items.map(itemCard).join('')}</div>
+    </div>
+  `;
+}).join('');
 
 /* ---------- cart ---------- */
 

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><meta name="design_doc_mode" content="canvas"><style>body{margin:0}a{color:#1F6F4A}a:hover{color:#17181A}</style></helmet>
+<div style="background:#FBFAF8;color:#17181A;font:15px/1.5 ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh">
+<div style="maxWidth:960px;max-width:960px;margin:0 auto;padding:32px 20px 72px">
+
+<header style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:32px">
+<div>
+<div style="font-size:20px;font-weight:650;letter-spacing:-.02em">Kettle &amp; <span style="color:#1F6F4A">Crumb</span></div>
+<div style="color:#6B6F72;font-size:13px">Demo storefront — no real food, no real money.</div>
+</div>
+<button style="font:inherit;cursor:pointer;border-radius:7px;border:1px solid #E6E3DD;background:#FFFFFF;color:#17181A;padding:6px 12px" style-hover="border-color:#1F6F4A;color:#1F6F4A">Clear demo data</button>
+</header>
+
+<section>
+<h2 style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#6B6F72;font-weight:600;margin:0 0 12px">Menu</h2>
+<div style="display:flex;flex-direction:column;gap:26px">
+<sc-for list="{{ cats }}" as="cat" hint-placeholder-count="4">
+<div>
+<h3 style="display:flex;align-items:center;gap:12px;font-size:13px;font-weight:600;letter-spacing:-.01em;margin:0 0 10px;color:#17181A">{{ cat.name }} <span style="color:#6B6F72;font-weight:450;font-variant-numeric:tabular-nums">{{ cat.count }}</span><span style="flex:1;height:1px;background:#E6E3DD"></span></h3>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">
+<sc-for list="{{ cat.items }}" as="m" hint-placeholder-count="3">
+<div style="background:#FFFFFF;border:1px solid #E6E3DD;border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:4px;box-shadow:0 1px 2px rgba(23,24,26,.06), 0 8px 24px rgba(23,24,26,.05)">
+<div style="font-size:28px;line-height:1;margin-bottom:6px">{{ m.emoji }}</div>
+<div style="font-weight:550">{{ m.name }}</div>
+<div style="color:#6B6F72;font-size:13px;flex:1">{{ m.desc }}</div>
+<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px">
+<span style="font-variant-numeric:tabular-nums;font-weight:550">{{ m.priceText }}</span>
+<button onClick="{{ m.add }}" style="font:inherit;cursor:pointer;border-radius:7px;border:1px solid #E6E3DD;background:#FFFFFF;color:#17181A;padding:6px 12px" style-hover="border-color:#1F6F4A;color:#1F6F4A">Add</button>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section style="margin-top:40px">
+<h2 style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#6B6F72;font-weight:600;margin:0 0 12px">Your order</h2>
+<div style="background:#FFFFFF;border:1px solid #E6E3DD;border-radius:10px;box-shadow:0 1px 2px rgba(23,24,26,.06), 0 8px 24px rgba(23,24,26,.05)">
+<sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ true }}">
+<div style="padding:12px 16px;color:#6B6F72;font-size:14px">Nothing added yet. Pick something from the menu.</div>
+</sc-if>
+<sc-for list="{{ cartLines }}" as="l" hint-placeholder-count="0">
+<div style="padding:12px 16px;border-top:1px solid #E6E3DD;display:flex;align-items:center;justify-content:space-between;gap:12px">
+<span style="flex:1">{{ l.label }}</span>
+<button onClick="{{ l.dec }}" style="font:inherit;cursor:pointer;border-radius:7px;border:1px solid #E6E3DD;background:#FFFFFF;color:#17181A;width:28px;height:28px;padding:0;line-height:1" style-hover="border-color:#1F6F4A;color:#1F6F4A">−</button>
+<span style="color:#6B6F72;font-variant-numeric:tabular-nums;min-width:18px;text-align:center">{{ l.qty }}</span>
+<button onClick="{{ l.inc }}" style="font:inherit;cursor:pointer;border-radius:7px;border:1px solid #E6E3DD;background:#FFFFFF;color:#17181A;width:28px;height:28px;padding:0;line-height:1" style-hover="border-color:#1F6F4A;color:#1F6F4A">+</button>
+<span style="font-variant-numeric:tabular-nums;font-weight:550">{{ l.lineTotal }}</span>
+</div>
+</sc-for>
+<sc-if value="{{ cartHasLines }}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="padding:12px 16px;border-top:1px solid #E6E3DD;display:flex;align-items:center;justify-content:space-between;gap:12px">
+<span style="flex:1;font-size:13px;color:#6B6F72;font-variant-numeric:tabular-nums">Delivery</span>
+<span style="font-variant-numeric:tabular-nums;font-weight:550">$2.50</span>
+</div>
+<div style="padding:12px 16px;border-top:1px solid #E6E3DD;display:flex;align-items:center;justify-content:space-between;gap:12px">
+<span style="flex:1;font-weight:650;font-variant-numeric:tabular-nums">{{ totalLabel }}</span>
+<button onClick="{{ place }}" style="font:inherit;cursor:pointer;border-radius:7px;background:#1F6F4A;color:#FFFFFF;border:1px solid #1F6F4A;font-weight:550;padding:6px 12px">Place order</button>
+</div>
+</div>
+</sc-if>
+</div>
+</section>
+
+<section style="margin-top:40px">
+<h2 style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#6B6F72;font-weight:600;margin:0 0 12px">Tracking</h2>
+<div style="display:flex;flex-direction:column;gap:12px">
+<sc-if value="{{ noOrders }}" hint-placeholder-val="{{ true }}">
+<div style="background:#FFFFFF;border:1px solid #E6E3DD;border-radius:10px;box-shadow:0 1px 2px rgba(23,24,26,.06), 0 8px 24px rgba(23,24,26,.05)"><div style="padding:12px 16px;color:#6B6F72;font-size:14px">No orders yet. Placed orders show live tracking here.</div></div>
+</sc-if>
+<sc-for list="{{ orders }}" as="o" hint-placeholder-count="0">
+<div style="background:#FFFFFF;border:1px solid #E6E3DD;border-radius:10px;box-shadow:0 1px 2px rgba(23,24,26,.06), 0 8px 24px rgba(23,24,26,.05)">
+<div style="padding:12px 16px">
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap">
+<div style="display:flex;align-items:baseline;gap:8px">
+<span style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;color:#6B6F72">{{ o.id }}</span>
+<span style="font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:3px 8px;border-radius:99px;background:{{ o.pillBg }};color:{{ o.pillInk }}">{{ o.stageLabel }}</span>
+</div>
+<span style="font-weight:650;font-variant-numeric:tabular-nums">{{ o.totalText }}</span>
+</div>
+<div style="color:#6B6F72;font-size:13px;margin-top:2px">{{ o.summary }}</div>
+<div style="display:flex;gap:4px;margin-top:14px">
+<sc-for list="{{ o.steps }}" as="s" hint-placeholder-count="4">
+<div style="flex:1;display:flex;flex-direction:column;gap:6px">
+<div style="height:3px;border-radius:2px;background:{{ s.barBg }};transition:background .4s ease"></div>
+<div style="font-size:11px;color:{{ s.ink }}">{{ s.label }}</div>
+</div>
+</sc-for>
+</div>
+<div style="font-size:13px;color:#6B6F72;font-variant-numeric:tabular-nums;margin-top:10px">{{ o.eta }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</section>
+
+<footer style="margin-top:48px;color:#6B6F72;font-size:12px;text-align:center">Prototype build · prices and delivery times are simulated</footer>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const CATEGORIES = [
+  { id: 'pasta', name: 'Pasta' },
+  { id: 'pizza', name: 'Pizza' },
+  { id: 'desi', name: 'Desi' },
+  { id: 'thai', name: 'Thai' },
+];
+const MENU = [
+  { id: 'p1', cat: 'pasta', emoji: '🍝', name: 'Carbonara', desc: 'Guanciale, pecorino, black pepper', price: 11.50 },
+  { id: 'p2', cat: 'pasta', emoji: '🍝', name: 'Penne Arrabbiata', desc: 'Chilli, garlic, San Marzano', price: 9.75 },
+  { id: 'p3', cat: 'pasta', emoji: '🍄', name: 'Truffle Fettuccine', desc: 'Wild mushroom, cream, parmesan', price: 13.00 },
+  { id: 'z1', cat: 'pizza', emoji: '🍕', name: 'Margherita', desc: 'San Marzano, fior di latte, basil', price: 10.00 },
+  { id: 'z2', cat: 'pizza', emoji: '🌶️', name: 'Diavola', desc: 'Spicy salami, chilli oil', price: 12.00 },
+  { id: 'z3', cat: 'pizza', emoji: '🧀', name: 'Quattro Formaggi', desc: 'Mozzarella, gorgonzola, taleggio', price: 12.50 },
+  { id: 'd1', cat: 'desi', emoji: '🍛', name: 'Chicken Karahi', desc: 'Wok-fried, tomato, ginger', price: 12.75 },
+  { id: 'd2', cat: 'desi', emoji: '🍚', name: 'Chicken Biryani', desc: 'Long grain, saffron, raita', price: 10.50 },
+  { id: 'd3', cat: 'desi', emoji: '🥘', name: 'Beef Nihari', desc: 'Slow cooked overnight, naan', price: 13.25 },
+  { id: 't1', cat: 'thai', emoji: '🍜', name: 'Pad Thai', desc: 'Rice noodle, tamarind, peanut', price: 11.00 },
+  { id: 't2', cat: 'thai', emoji: '🍲', name: 'Green Curry', desc: 'Coconut, thai basil, jasmine rice', price: 11.75 },
+  { id: 't3', cat: 'thai', emoji: '🦐', name: 'Tom Yum Goong', desc: 'Prawn, lemongrass, lime', price: 12.25 },
+];
+const STAGES = [
+  { label: 'Confirmed', at: 0 },
+  { label: 'Preparing', at: 8 },
+  { label: 'On the way', at: 20 },
+  { label: 'Delivered', at: 36 },
+];
+const DELIVERED_AT = 36, DELIVERY_FEE = 2.50;
+const money = n => '$' + n.toFixed(2);
+
+class Component extends DCLogic {
+  state = { cart: {}, orders: [], tick: 0 };
+  componentDidMount() { this._t = setInterval(() => this.setState(s => ({ tick: s.tick + 1 })), 1000); }
+  componentWillUnmount() { clearInterval(this._t); }
+
+  lines() {
+    return Object.entries(this.state.cart).map(([id, qty]) => ({ item: MENU.find(m => m.id === id), qty }));
+  }
+  subtotal() { return this.lines().reduce((s, l) => s + l.item.price * l.qty, 0); }
+  bump(id, d) {
+    this.setState(s => {
+      const cart = { ...s.cart };
+      cart[id] = (cart[id] || 0) + d;
+      if (cart[id] < 1) delete cart[id];
+      return { cart };
+    });
+  }
+  place() {
+    const lines = this.lines();
+    if (!lines.length) return;
+    const o = {
+      id: 'KC-' + String(Math.floor(Math.random() * 9000) + 1000),
+      placedAt: Date.now(),
+      total: this.subtotal() + DELIVERY_FEE,
+      lines: lines.map(l => ({ emoji: l.item.emoji, name: l.item.name, qty: l.qty })),
+    };
+    this.setState(s => ({ orders: [o, ...s.orders], cart: {} }));
+  }
+
+  renderVals() {
+    const lines = this.lines();
+    const cats = CATEGORIES.map(c => {
+      const items = MENU.filter(m => m.cat === c.id);
+      return { name: c.name, count: items.length, items: items.map(m => ({
+        ...m, priceText: money(m.price), add: () => this.bump(m.id, 1),
+      })) };
+    }).filter(c => c.count);
+
+    const orders = this.state.orders.map(o => {
+      const secs = (Date.now() - o.placedAt) / 1000;
+      let i = 0;
+      STAGES.forEach((s, n) => { if (secs >= s.at) i = n; });
+      const delivered = i === STAGES.length - 1;
+      const left = Math.max(0, Math.ceil(DELIVERED_AT - secs));
+      return {
+        id: o.id,
+        totalText: money(o.total),
+        stageLabel: STAGES[i].label,
+        pillBg: delivered ? '#E6E3DD' : '#1F6F4A',
+        pillInk: delivered ? '#17181A' : '#FFFFFF',
+        summary: o.lines.map(l => `${l.emoji} ${l.name} ×${l.qty}`).join(' · '),
+        steps: STAGES.map((s, n) => ({
+          label: s.label,
+          barBg: n <= i ? '#1F6F4A' : '#E6E3DD',
+          ink: n <= i ? '#17181A' : '#6B6F72',
+        })),
+        eta: delivered ? 'Delivered — enjoy.' : `Arriving in about ${left}s`,
+      };
+    });
+
+    return {
+      cats,
+      cartEmpty: lines.length === 0,
+      cartHasLines: lines.length > 0,
+      cartLines: lines.map(l => ({
+        label: `${l.item.emoji} ${l.item.name}`,
+        qty: l.qty,
+        lineTotal: money(l.item.price * l.qty),
+        inc: () => this.bump(l.item.id, 1),
+        dec: () => this.bump(l.item.id, -1),
+      })),
+      totalLabel: 'Total ' + money(this.subtotal() + DELIVERY_FEE),
+      place: () => this.place(),
+      orders,
+      noOrders: orders.length === 0,
+    };
+  }
+}
+</script>
+</body>
+</html>

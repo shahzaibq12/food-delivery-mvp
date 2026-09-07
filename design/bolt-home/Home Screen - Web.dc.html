@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/nocturne-1736f782-ca71-4f27-b5dc-fd18949940c0/styles.css">
+<script src="_ds/nocturne-1736f782-ca71-4f27-b5dc-fd18949940c0/_ds_bundle.js"></script>
+<style>
+body{margin:0;background:var(--color-bg)}
+a{color:var(--color-accent);text-decoration:none}
+a:hover{color:var(--color-accent-300)}
+*:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+.scrollhide::-webkit-scrollbar{display:none}
+.scrollhide{scrollbar-width:none}
+</style></helmet>
+
+<div style="min-height:100vh;background:radial-gradient(80% 42% at 22% 0%,#1e2135 0%,var(--color-bg) 62%);color:var(--color-text);font-family:var(--font-body);font-size:14px;line-height:1.5">
+
+<header style="position:sticky;top:0;z-index:20;background:rgba(22,24,38,.86);backdrop-filter:blur(16px);border-bottom:1px solid var(--color-divider)">
+<div style="max-width:1360px;margin:0 auto;padding:12px 40px;min-height:64px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px">
+<div style="display:flex;align-items:center;gap:8px;flex:none">
+<svg width="28" height="28" viewBox="0 0 120 120" fill="none" style="flex:none" role="img" aria-label="Bolt">
+<rect x="4" y="4" width="112" height="112" rx="30" fill="#1b1d2c" stroke="#9184d9" stroke-width="4"></rect>
+<g transform="skewX(-8) translate(8 6)">
+<g stroke="#b6f21c" stroke-width="4.6" stroke-linecap="round" opacity=".9"><path d="M14 44h20"></path><path d="M10 56h20"></path><path d="M16 68h10"></path></g>
+<g stroke="#9184d9" stroke-width="5"><circle cx="42" cy="78" r="11.5"></circle><circle cx="74" cy="78" r="11.5"></circle></g>
+<path d="M68 34L41 66h14l-7 25 30-38H60l8-19z" fill="#1b1d2c" stroke="#1b1d2c" stroke-width="9" stroke-linejoin="round"></path>
+<path d="M68 34L41 66h14l-7 25 30-38H60l8-19z" fill="#b6f21c"></path>
+<circle cx="68" cy="24" r="12.5" fill="#1b1d2c" stroke="#1b1d2c" stroke-width="9"></circle>
+<circle cx="68" cy="24" r="12.5" fill="#9184d9"></circle>
+<path d="M78.6 17.4A12.5 12.5 0 0 1 74.6 34.6L71.2 29.2A6.1 6.1 0 0 0 73.2 20.8Z" fill="#1b1d2c" stroke="#1b1d2c" stroke-width="1.1" stroke-linejoin="round"></path>
+</g>
+</svg>
+<span style="font-family:var(--font-heading);font-size:19px;font-weight:500;letter-spacing:.01em">Bolt</span>
+</div>
+
+<button onClick="{{ noop }}" style="flex:none;cursor:pointer;font:inherit;font-size:13px;display:flex;align-items:center;gap:8px;background:transparent;border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:7px 11px;color:var(--color-text)" style-hover="border-color:var(--color-accent);background:rgba(145,132,217,.08)">
+<svg width="15" height="15" viewBox="0 0 256 256" fill="var(--color-accent)"><path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"></path></svg>
+<span style="color:rgba(233,233,237,.55)">Deliver to</span>
+<span>12-C Gulberg III</span>
+<svg width="13" height="13" viewBox="0 0 256 256" fill="rgba(233,233,237,.5)"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+</button>
+
+<label style="flex:1 1 200px;min-width:0;max-width:440px;display:flex;align-items:center;gap:9px;background:rgba(233,233,237,.05);border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:0 12px;height:38px" style-focus="border-color:var(--color-accent)">
+<svg width="16" height="16" viewBox="0 0 256 256" fill="rgba(233,233,237,.5)" style="flex:none"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>
+<input value="{{ query }}" onChange="{{ onQuery }}" placeholder="Search kitchens or dishes" style="flex:1;min-width:0;background:none;border:none;outline:none;color:var(--color-text);font:inherit;font-size:13.5px" />
+</label>
+
+<div style="flex:1"></div>
+
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;flex:none">
+<button onClick="{{ noop }}" style="cursor:pointer;font:inherit;font-size:13px;background:transparent;border:1px solid transparent;border-radius:var(--radius-md);padding:7px 10px;color:rgba(233,233,237,.72);display:flex;align-items:center;gap:7px" style-hover="border-color:var(--color-divider);color:var(--color-text)">
+<svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M216,64H176a48,48,0,0,0-96,0H40A16,16,0,0,0,24,80V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V80A16,16,0,0,0,216,64ZM128,32a32,32,0,0,1,32,32H96A32,32,0,0,1,128,32Zm88,168H40V80H216V200Z"></path></svg>Orders</button>
+<button onClick="{{ noop }}" style="cursor:pointer;font:inherit;font-size:13px;background:transparent;border:1px solid transparent;border-radius:var(--radius-md);padding:7px 10px;color:rgba(233,233,237,.72);display:flex;align-items:center;gap:7px" style-hover="border-color:var(--color-divider);color:var(--color-text)">
+<svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M178,40c-20.65,0-38.73,8.88-50,23.89C116.73,48.88,98.65,40,78,40a62.07,62.07,0,0,0-62,62c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,228.66,240,172,240,102A62.07,62.07,0,0,0,178,40ZM128,214.8C109.74,204.16,32,155.69,32,102A46.06,46.06,0,0,1,78,56c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,155.61,146.24,204.15,128,214.8Z"></path></svg>Saved <span style="color:rgba(233,233,237,.4)">{{ favCount }}</span></button>
+<button onClick="{{ noop }}" style="cursor:pointer;font:inherit;font-size:13px;background:transparent;border:1px solid var(--color-accent);border-radius:var(--radius-md);padding:7px 12px;color:var(--color-accent-200);display:flex;align-items:center;gap:8px" style-hover="background:rgba(145,132,217,.12)">Cart<span style="min-width:18px;height:18px;border-radius:99px;background:var(--color-accent);color:#161826;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;padding:0 5px">2</span></button>
+<button onClick="{{ noop }}" style="margin-left:6px;width:34px;height:34px;flex:none;cursor:pointer;border-radius:99px;border:1px solid var(--color-accent-700);background:rgba(145,132,217,.12);color:var(--color-accent-200);font:inherit;font-size:12px;font-weight:600" style-hover="border-color:var(--color-accent)" aria-label="Profile">SA</button>
+</div>
+</div>
+</header>
+
+<div style="max-width:1360px;margin:0 auto;padding:26px 40px 64px;overflow-x:hidden">
+
+<div style="border:1px solid var(--color-accent-800);border-radius:var(--radius-md);background:linear-gradient(100deg,rgba(145,132,217,.13),rgba(35,37,50,.45) 62%);padding:14px 18px 16px;margin-bottom:30px">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px">
+<span style="font-family:var(--font-heading);font-size:26px;font-weight:500;font-variant-numeric:tabular-nums;color:#cdf765;text-shadow:0 0 22px rgba(182,242,28,.4);line-height:1">4′</span>
+<div style="flex:1;min-width:0">
+<div style="font-size:13.5px"><span style="color:#cdf765">{{ trackStage }}</span> <span style="color:rgba(233,233,237,.45)">· Burger Cartel · 2 items</span></div>
+<div style="font-size:12px;color:rgba(233,233,237,.42);margin-top:3px">{{ trackSub }}</div>
+</div>
+<button onClick="{{ noop }}" style="flex:none;cursor:pointer;font:inherit;font-size:13px;background:transparent;border:1px solid var(--color-accent);border-radius:var(--radius-md);padding:7px 14px;color:var(--color-accent-200)" style-hover="background:rgba(145,132,217,.12)">Track order</button>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:16px">
+<sc-for list="{{ trackSteps }}" as="s" hint-placeholder-count="4">
+<div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+<div style="height:3px;border-radius:2px;background:{{ s.bar }};box-shadow:{{ s.glow }}"></div>
+<div style="display:flex;align-items:center;gap:6px;min-width:0">
+<svg width="12" height="12" viewBox="0 0 256 256" fill="{{ s.icon }}" style="flex:none"><path d="{{ s.path }}"></path></svg>
+<span style="font-size:12px;color:{{ s.fg }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.label }}</span>
+<span style="flex:1"></span>
+<span style="font-size:11px;font-variant-numeric:tabular-nums;color:{{ s.timeFg }};flex:none">{{ s.time }}</span>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;margin-bottom:18px">
+<div>
+<h1 style="font-family:var(--font-heading);font-size:34px;font-weight:500;letter-spacing:-.02em;margin:0;line-height:1.15">Fast food, actually fast.</h1>
+<p style="margin:8px 0 0;font-size:14px;color:rgba(233,233,237,.55)">{{ openLine }}</p>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:222px minmax(0,1fr);gap:40px;align-items:start">
+
+<aside style="position:sticky;top:90px;display:flex;flex-direction:column;gap:26px">
+<div>
+<div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(233,233,237,.42);margin-bottom:10px">Categories</div>
+<div style="display:flex;flex-direction:column;gap:1px">
+<sc-for list="{{ cats }}" as="c" hint-placeholder-count="8">
+<button onClick="{{ c.pick }}" style="cursor:pointer;font:inherit;font-size:13.5px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:10px;background:{{ c.bg }};border:none;border-left:2px solid {{ c.mark }};border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:8px 10px;color:{{ c.fg }}" style-hover="background:rgba(233,233,237,.05)">{{ c.name }}<span style="font-size:11.5px;color:rgba(233,233,237,.35);font-variant-numeric:tabular-nums">{{ c.count }}</span></button>
+</sc-for>
+</div>
+</div>
+
+<div style="height:1px;background:linear-gradient(to right,transparent,var(--color-divider) 12%,var(--color-divider) 88%,transparent)"></div>
+
+<div>
+<div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(233,233,237,.42);margin-bottom:10px">Speed</div>
+<button onClick="{{ toggleBolt }}" style="width:100%;cursor:pointer;font:inherit;font-size:13px;display:flex;align-items:center;gap:9px;background:{{ boltBg }};border:1px solid {{ boltBorder }};border-radius:var(--radius-md);padding:9px 11px;color:{{ boltFg }};box-shadow:{{ boltGlow }}">
+<svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor" style="flex:none"><path d="M215.79,118.17,146.6,199.09a8,8,0,0,1-13.79-7L145.35,136H88a8,8,0,0,1-6.09-13.17l69.19-80.92a8,8,0,0,1,13.79,7L152.65,104H210A8,8,0,0,1,215.79,118.17Z"></path></svg>
+<span style="flex:1;text-align:left">Bolt lane only</span>
+<span style="font-size:11px;color:rgba(233,233,237,.4)">{{ boltState }}</span>
+</button>
+<p style="margin:8px 2px 0;font-size:11.5px;line-height:1.45;color:rgba(233,233,237,.4)">Kitchens that consistently hand off in under 25 minutes.</p>
+</div>
+
+<div>
+<div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(233,233,237,.42);margin-bottom:10px">Price</div>
+<div style="display:flex;gap:6px">
+<sc-for list="{{ prices }}" as="p" hint-placeholder-count="3">
+<button onClick="{{ p.toggle }}" style="flex:1;cursor:pointer;font:inherit;font-size:13px;letter-spacing:.06em;background:{{ p.bg }};border:1px solid {{ p.border }};border-radius:var(--radius-sm);padding:7px 0;color:{{ p.fg }}">{{ p.label }}</button>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(233,233,237,.42);margin-bottom:10px">Rating</div>
+<div style="display:flex;flex-direction:column;gap:1px">
+<sc-for list="{{ ratings }}" as="g" hint-placeholder-count="3">
+<button onClick="{{ g.pick }}" style="cursor:pointer;font:inherit;font-size:13px;text-align:left;display:flex;align-items:center;gap:8px;background:none;border:none;padding:6px 2px;color:{{ g.fg }}" style-hover="color:var(--color-text)">
+<span style="width:13px;height:13px;flex:none;border-radius:99px;border:1px solid {{ g.dotBorder }};display:flex;align-items:center;justify-content:center"><span style="width:6px;height:6px;border-radius:99px;background:{{ g.dotFill }}"></span></span>{{ g.label }}</button>
+</sc-for>
+</div>
+</div>
+</aside>
+
+<main style="min-width:0">
+
+<sc-if value="{{ showLane }}" hint-placeholder-val="{{ true }}">
+<section style="margin-bottom:38px">
+<div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin-bottom:14px">
+<svg width="15" height="15" viewBox="0 0 256 256" fill="#b6f21c" style="flex:none;filter:drop-shadow(0 0 8px rgba(182,242,28,.45))"><path d="M215.79,118.17,146.6,199.09a8,8,0,0,1-13.79-7L145.35,136H88a8,8,0,0,1-6.09-13.17l69.19-80.92a8,8,0,0,1,13.79,7L152.65,104H210A8,8,0,0,1,215.79,118.17Z"></path></svg>
+<h2 style="font-family:var(--font-heading);font-size:13px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin:0">Bolt lane</h2>
+<span style="font-size:12.5px;color:rgba(233,233,237,.42)">the three quickest kitchens to your door right now</span>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px">
+<sc-for list="{{ lane }}" as="e" hint-placeholder-count="3">
+<div style="display:flex;gap:14px;padding:14px;border-radius:var(--radius-lg);border:1px solid rgba(182,242,28,.3);background:linear-gradient(150deg,rgba(182,242,28,.09),rgba(30,32,43,.85) 68%)">
+<div style="width:96px;height:96px;flex:0 1 96px;min-width:64px;border-radius:var(--radius-md);border:1px solid var(--color-neutral-800);background:repeating-linear-gradient(135deg,#262939,#262939 7px,#1e2029 7px,#1e2029 14px);position:relative">
+<span style="position:absolute;bottom:6px;left:7px;font-size:8px;letter-spacing:.08em;color:rgba(233,233,237,.3)">PHOTO</span>
+</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column">
+<div style="display:flex;align-items:baseline;gap:5px">
+<span style="font-family:var(--font-heading);font-size:32px;font-weight:500;line-height:1;font-variant-numeric:tabular-nums;color:#cdf765;text-shadow:0 0 20px rgba(182,242,28,.4)">{{ e.mins }}</span>
+<span style="font-size:11.5px;color:rgba(233,233,237,.5)">min</span>
+</div>
+<div style="font-family:var(--font-heading);font-size:15px;font-weight:500;margin-top:10px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ e.name }}</div>
+<div style="font-size:12px;color:rgba(233,233,237,.42);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">★ {{ e.rating }} · {{ e.cuisine }} · {{ e.dist }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</section>
+</sc-if>
+
+<div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px 24px;padding-bottom:12px;border-bottom:1px solid var(--color-divider);margin-bottom:20px">
+<h2 style="font-family:var(--font-heading);font-size:13px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin:0">{{ resultLabel }}</h2>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px">
+<sc-if value="{{ hasFilters }}" hint-placeholder-val="{{ false }}">
+<button onClick="{{ clearAll }}" style="cursor:pointer;font:inherit;font-size:12.5px;background:none;border:none;padding:0;color:rgba(233,233,237,.5)" style-hover="color:var(--color-text)">Clear filters</button>
+</sc-if>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:2px;border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:2px">
+<sc-for list="{{ sorts }}" as="s" hint-placeholder-count="4">
+<button onClick="{{ s.pick }}" style="cursor:pointer;font:inherit;font-size:12.5px;padding:5px 11px;border:none;border-radius:var(--radius-sm);background:{{ s.bg }};color:{{ s.fg }}">{{ s.name }}</button>
+</sc-for>
+</div>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:18px">
+<sc-for list="{{ list }}" as="r" hint-placeholder-count="9">
+<div style="display:flex;flex-direction:column;border-radius:var(--radius-lg);background:linear-gradient(160deg,rgba(35,37,50,.85),rgba(28,30,40,.6));border:1px solid var(--color-neutral-800);overflow:hidden" style-hover="border-color:var(--color-accent-700)">
+<div style="position:relative;height:132px;background:repeating-linear-gradient(125deg,#262939,#262939 8px,#1e2029 8px,#1e2029 16px);border-bottom:1px solid var(--color-neutral-800)">
+<span style="position:absolute;bottom:8px;left:10px;font-size:8.5px;letter-spacing:.09em;color:rgba(233,233,237,.3)">PHOTO</span>
+<button onClick="{{ r.fav }}" style="position:absolute;top:9px;right:9px;width:30px;height:30px;cursor:pointer;border-radius:99px;border:1px solid var(--color-divider);background:rgba(22,24,38,.7);backdrop-filter:blur(6px);color:{{ r.heartColor }};display:flex;align-items:center;justify-content:center;padding:0" style-hover="border-color:var(--color-accent)" aria-label="Save"><svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="{{ r.heartPath }}"></path></svg></button>
+<sc-if value="{{ r.isBolt }}" hint-placeholder-val="{{ true }}">
+<span style="position:absolute;top:10px;left:10px;display:flex;align-items:center;gap:5px;font-size:10px;letter-spacing:.08em;padding:4px 8px;border-radius:99px;background:rgba(22,24,38,.72);backdrop-filter:blur(6px);border:1px solid rgba(182,242,28,.45);color:#cdf765"><svg width="10" height="10" viewBox="0 0 256 256" fill="currentColor"><path d="M215.79,118.17,146.6,199.09a8,8,0,0,1-13.79-7L145.35,136H88a8,8,0,0,1-6.09-13.17l69.19-80.92a8,8,0,0,1,13.79,7L152.65,104H210A8,8,0,0,1,215.79,118.17Z"></path></svg>BOLT LANE</span>
+</sc-if>
+</div>
+<div style="padding:14px 15px 15px;display:flex;flex-direction:column;gap:7px;flex:1">
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+<span style="font-family:var(--font-heading);font-size:16px;font-weight:500;line-height:1.25;min-width:0">{{ r.name }}</span>
+<span style="font-family:var(--font-heading);font-size:19px;font-weight:500;line-height:1;font-variant-numeric:tabular-nums;color:#cdf765;flex:none">{{ r.eta }}</span>
+</div>
+<div style="font-size:12.5px;color:rgba(233,233,237,.45)">{{ r.cuisine }} · {{ r.dist }}</div>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px 7px;margin-top:auto;padding-top:9px">
+<span style="display:flex;align-items:center;gap:5px;font-size:11.5px;padding:4px 8px;border-radius:6px;background:rgba(233,233,237,.06);color:rgba(233,233,237,.78)"><svg width="11" height="11" viewBox="0 0 256 256" fill="var(--color-accent)"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path></svg>{{ r.rating }} <span style="color:rgba(233,233,237,.35)">{{ r.reviews }}</span></span>
+<span style="font-size:11.5px;padding:4px 8px;border-radius:6px;background:rgba(233,233,237,.06);letter-spacing:.06em"><span style="color:var(--color-accent)">{{ r.priceOn }}</span><span style="color:rgba(233,233,237,.28)">{{ r.priceOff }}</span></span>
+<sc-if value="{{ r.tag }}" hint-placeholder-val="{{ true }}">
+<span style="font-size:11px;padding:4px 8px;border-radius:6px;background:var(--color-accent-900);color:var(--color-accent-300)">{{ r.tag }}</span>
+</sc-if>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+
+<sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
+<div style="padding:56px 0;text-align:center">
+<div style="font-family:var(--font-heading);font-size:17px;font-weight:500">Nothing matches that yet.</div>
+<p style="margin:7px 0 16px;font-size:13.5px;color:rgba(233,233,237,.5)">Loosen a filter and we'll find you something quick.</p>
+<button onClick="{{ clearAll }}" style="cursor:pointer;font:inherit;font-size:13px;background:transparent;border:1px solid var(--color-accent);border-radius:var(--radius-md);padding:8px 16px;color:var(--color-accent-200)" style-hover="background:rgba(145,132,217,.12)">Clear filters</button>
+</div>
+</sc-if>
+
+</main>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1024}}">
+const CATS = ['All', 'Biryani', 'Pasta', 'Pizza', 'Fast Food', 'Desi', 'Pan Asian', 'Desserts'];
+const SORTS = ['Fastest', 'Recommended', 'Top rated', 'Cheapest'];
+
+const R = [
+  { id: 'kol', name: 'Kolachi Biryani House', cat: 'Biryani', cuisine: 'Sindhi biryani, BBQ', rating: 4.8, reviews: '3.4k', mins: '20–30', price: 1, dist: '1.4 km', tag: 'Free delivery' },
+  { id: 'crt', name: 'Burger Cartel', cat: 'Fast Food', cuisine: 'Burgers, loaded fries', rating: 4.2, reviews: '5.6k', mins: '15–25', price: 1, dist: '0.9 km', tag: 'Buy 1 get 1' },
+  { id: 'bnd', name: 'Bundu Grill & Karahi', cat: 'Desi', cuisine: 'Desi, charcoal grill', rating: 4.6, reviews: '1.2k', mins: '25–35', price: 2, dist: '2.1 km', tag: '' },
+  { id: 'ost', name: 'Osteria Verde', cat: 'Pasta', cuisine: 'Hand-rolled pasta', rating: 4.4, reviews: '610', mins: '35–45', price: 3, dist: '4.6 km', tag: '' },
+  { id: 'dgh', name: 'Lahore Dough Co.', cat: 'Pizza', cuisine: 'Sourdough pizza', rating: 4.5, reviews: '2.1k', mins: '30–40', price: 2, dist: '3.2 km', tag: '' },
+  { id: 'wok', name: 'Wok Republic', cat: 'Pan Asian', cuisine: 'Thai, Chinese, ramen', rating: 4.3, reviews: '890', mins: '30–45', price: 2, dist: '3.8 km', tag: '' },
+  { id: 'sug', name: 'Sugar & Saffron', cat: 'Desserts', cuisine: 'Kulfi, cakes, brownies', rating: 4.7, reviews: '1.4k', mins: '25–35', price: 2, dist: '2.7 km', tag: 'New' },
+  { id: 'deg', name: 'Degh & Dum', cat: 'Biryani', cuisine: 'Pulao, nihari, naan', rating: 4.5, reviews: '2.6k', mins: '20–30', price: 1, dist: '1.8 km', tag: '' },
+  { id: 'zam', name: 'Zamzama Shawarma', cat: 'Fast Food', cuisine: 'Shawarma, wraps', rating: 4.1, reviews: '4.2k', mins: '15–20', price: 1, dist: '0.6 km', tag: 'Fastest near you' },
+  { id: 'noo', name: 'Noodle Theory', cat: 'Pan Asian', cuisine: 'Ramen, bao, gyoza', rating: 4.6, reviews: '1.1k', mins: '25–35', price: 3, dist: '3.1 km', tag: '' },
+  { id: 'for', name: 'Forno Nero', cat: 'Pizza', cuisine: 'Neapolitan, wood-fired', rating: 4.7, reviews: '780', mins: '35–50', price: 3, dist: '5.2 km', tag: '' },
+  { id: 'tia', name: 'Tiramisu Club', cat: 'Desserts', cuisine: 'Gelato, tiramisu', rating: 4.4, reviews: '520', mins: '20–30', price: 2, dist: '2.2 km', tag: '' },
+];
+
+const PH_HEART = 'M178,40c-20.65,0-38.73,8.88-50,23.89C116.73,48.88,98.65,40,78,40a62.07,62.07,0,0,0-62,62c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,228.66,240,172,240,102A62.07,62.07,0,0,0,178,40ZM128,214.8C109.74,204.16,32,155.69,32,102A46.06,46.06,0,0,1,78,56c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,155.61,146.24,204.15,128,214.8Z';
+const PH_HEART_FILL = 'M240,102c0,70-103.79,126.66-108.21,129a8,8,0,0,1-7.58,0C119.79,228.66,16,172,16,102A62.07,62.07,0,0,1,78,40c20.65,0,38.73,8.88,50,23.89C139.27,48.88,157.35,40,178,40A62.07,62.07,0,0,1,240,102Z';
+
+const LIME = '#b6f21c', LIME_TXT = '#cdf765';
+const P_CHECK = 'M104,192a8.5,8.5,0,0,1-6-2.5L34.5,126a8.5,8.5,0,0,1,12-12L104,171.5,209.5,66a8.5,8.5,0,0,1,12,12l-111.5,111.5A8.5,8.5,0,0,1,104,192Z';
+const P_DOT = 'M128,72a56,56,0,1,0,56,56A56.06,56.06,0,0,0,128,72Z';
+const P_RING = 'M128,32a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,32Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,208Z';
+
+const TRACK = [
+  { label: 'Preparing order', time: '7:41', sub: 'Kitchen confirmed in 40 seconds' },
+  { label: 'Order picked up', time: '7:52', sub: 'Zohaib collected your bag' },
+  { label: 'Around the corner', time: 'now', sub: 'Rider is two streets away — 4 minutes out' },
+  { label: 'Delivered', time: '~8:04', sub: 'Handing off at 12-C Gulberg III' },
+];
+const TRACK_AT = 2;
+
+const lo = r => parseInt(r.mins, 10);
+const hi = r => parseInt(r.mins.split(/[–-]/)[1], 10);
+const isBolt = r => hi(r) <= 25;
+
+class Component extends DCLogic {
+  state = { cat: 'All', sort: 0, query: '', boltOnly: false, prices: {}, minRating: 0, favs: { kol: true, zam: true } };
+
+  filtered() {
+    const s = this.state;
+    const q = s.query.trim().toLowerCase();
+    let out = R.filter(r =>
+      (s.cat === 'All' || r.cat === s.cat) &&
+      (!s.boltOnly || isBolt(r)) &&
+      (!Object.values(s.prices).some(Boolean) || s.prices[r.price]) &&
+      r.rating >= s.minRating &&
+      (!q || (r.name + ' ' + r.cuisine + ' ' + r.cat).toLowerCase().includes(q))
+    );
+    const by = SORTS[s.sort];
+    if (by === 'Fastest') out = [...out].sort((a, b) => lo(a) - lo(b) || hi(a) - hi(b));
+    if (by === 'Top rated') out = [...out].sort((a, b) => b.rating - a.rating);
+    if (by === 'Cheapest') out = [...out].sort((a, b) => a.price - b.price || lo(a) - lo(b));
+    return out;
+  }
+
+  row(r) {
+    const fav = !!this.state.favs[r.id];
+    return {
+      ...r,
+      eta: r.mins + ' min',
+      rating: r.rating.toFixed(1),
+      priceOn: '$'.repeat(r.price),
+      priceOff: '$'.repeat(3 - r.price),
+      isBolt: isBolt(r) || null,
+      tag: r.tag || null,
+      fav: () => this.setState(s => ({ favs: { ...s.favs, [r.id]: !s.favs[r.id] } })),
+      heartColor: fav ? 'var(--color-accent)' : 'rgba(233,233,237,.55)',
+      heartPath: fav ? PH_HEART_FILL : PH_HEART,
+    };
+  }
+
+  renderVals() {
+    const s = this.state;
+    const list = this.filtered();
+    const anyPrice = Object.values(s.prices).some(Boolean);
+    const hasFilters = s.cat !== 'All' || s.boltOnly || anyPrice || s.minRating > 0 || !!s.query.trim();
+
+    const lane = [...R].sort((a, b) => lo(a) - lo(b)).slice(0, 3).map(r => ({
+      name: r.name, mins: String(lo(r)), cuisine: r.cuisine.split(',')[0], rating: r.rating.toFixed(1), dist: r.dist,
+    }));
+
+    const fastCount = R.filter(isBolt).length;
+
+    return {
+      noop: () => {},
+      trackStage: TRACK[TRACK_AT].label,
+      trackSub: TRACK[TRACK_AT].sub,
+      trackSteps: TRACK.map((t, i) => {
+        const done = i < TRACK_AT, now = i === TRACK_AT;
+        return {
+          label: t.label,
+          time: t.time,
+          path: done ? P_CHECK : now ? P_DOT : P_RING,
+          icon: done ? LIME : now ? LIME_TXT : 'rgba(233,233,237,.28)',
+          bar: done ? LIME : now ? LIME_TXT : 'var(--color-neutral-800)',
+          glow: now ? '0 0 12px rgba(182,242,28,.65)' : 'none',
+          fg: done || now ? 'var(--color-text)' : 'rgba(233,233,237,.4)',
+          timeFg: now ? LIME_TXT : 'rgba(233,233,237,.35)',
+        };
+      }),
+      query: s.query,
+      onQuery: e => this.setState({ query: e.target.value }),
+      favCount: Object.values(s.favs).filter(Boolean).length,
+      openLine: `${R.length} kitchens open in Gulberg · ${fastCount} in the Bolt lane · average 24 min to your door`,
+
+      cats: CATS.map(name => {
+        const on = name === s.cat;
+        return {
+          name,
+          count: name === 'All' ? R.length : R.filter(r => r.cat === name).length,
+          pick: () => this.setState({ cat: name }),
+          bg: on ? 'rgba(145,132,217,.12)' : 'transparent',
+          fg: on ? 'var(--color-accent-200)' : 'rgba(233,233,237,.66)',
+          mark: on ? 'var(--color-accent)' : 'transparent',
+        };
+      }),
+
+      sorts: SORTS.map((name, i) => ({
+        name,
+        pick: () => this.setState({ sort: i }),
+        bg: i === s.sort ? (name === 'Fastest' ? 'rgba(182,242,28,.1)' : 'rgba(145,132,217,.14)') : 'transparent',
+        fg: i === s.sort ? (name === 'Fastest' ? LIME_TXT : 'var(--color-accent-200)') : 'rgba(233,233,237,.55)',
+      })),
+
+      prices: [1, 2, 3].map(n => {
+        const on = !!s.prices[n];
+        return {
+          label: '$'.repeat(n),
+          toggle: () => this.setState(st => ({ prices: { ...st.prices, [n]: !st.prices[n] } })),
+          bg: on ? 'rgba(145,132,217,.14)' : 'transparent',
+          fg: on ? 'var(--color-accent-200)' : 'rgba(233,233,237,.55)',
+          border: on ? 'var(--color-accent)' : 'var(--color-divider)',
+        };
+      }),
+
+      ratings: [{ v: 0, label: 'Any rating' }, { v: 4, label: '4.0 and up' }, { v: 4.5, label: '4.5 and up' }].map(g => {
+        const on = s.minRating === g.v;
+        return {
+          label: g.label,
+          pick: () => this.setState({ minRating: g.v }),
+          fg: on ? 'var(--color-text)' : 'rgba(233,233,237,.55)',
+          dotBorder: on ? 'var(--color-accent)' : 'var(--color-neutral-700)',
+          dotFill: on ? 'var(--color-accent)' : 'transparent',
+        };
+      }),
+
+      boltOnly: s.boltOnly,
+      boltState: s.boltOnly ? 'On' : 'Off',
+      boltBg: s.boltOnly ? 'rgba(182,242,28,.1)' : 'transparent',
+      boltFg: s.boltOnly ? LIME_TXT : 'rgba(233,233,237,.7)',
+      boltBorder: s.boltOnly ? 'rgba(182,242,28,.5)' : 'var(--color-divider)',
+      boltGlow: s.boltOnly ? '0 0 18px rgba(182,242,28,.18)' : 'none',
+      toggleBolt: () => this.setState(st => ({ boltOnly: !st.boltOnly })),
+
+      showLane: !hasFilters || null,
+      lane,
+      list: list.map(r => this.row(r)),
+      empty: list.length === 0 || null,
+      resultLabel: list.length + (list.length === 1 ? ' kitchen' : ' kitchens') + ' · ' + (s.cat === 'All' ? 'all categories' : s.cat.toLowerCase()),
+      hasFilters: hasFilters || null,
+      clearAll: () => this.setState({ cat: 'All', boltOnly: false, prices: {}, minRating: 0, query: '' }),
+    };
+  }
+}
+</script>
+</body>
+</html>

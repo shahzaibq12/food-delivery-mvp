@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="_ds/nocturne-1736f782-ca71-4f27-b5dc-fd18949940c0/styles.css">
+<script src="_ds/nocturne-1736f782-ca71-4f27-b5dc-fd18949940c0/_ds_bundle.js"></script>
+<style>
+body{margin:0;background:#0f1119;font-family:var(--font-body)}
+a{color:var(--color-accent);text-decoration:none}
+a:hover{color:var(--color-accent-300)}
+.dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(255,255,255,.07)}
+.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 24px}
+.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:var(--color-accent);color:#161826;border-radius:4px}
+.dv-tname{font:500 13px/1.2 var(--font-heading);color:var(--color-text)}
+.dv-opts{display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start}
+.dv-opt{flex:none;display:flex;flex-direction:column;gap:10px;scroll-margin-top:16px}
+.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(233,233,237,.1);color:var(--color-text);border-radius:5px}
+.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11.5px/1.3 var(--font-body);color:rgba(233,233,237,.55);max-width:402px}
+.dv-opt:target .dv-oid{background:var(--color-accent);color:#161826}
+.dv-next{margin:26px 0 0;font:12px/1.6 var(--font-body);color:rgba(233,233,237,.5)}
+.scrollhide::-webkit-scrollbar{display:none}
+.scrollhide{scrollbar-width:none}
+</style></helmet>
+
+<section class="dv-turn" id="t2">
+<div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">Bolt — <a class="dv-oid" href="#1c">1c</a> taken further, built around speed</span></div>
+<div class="dv-opts">
+<div class="dv-opt" id="2a">
+<div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a>Minutes are the headline: a Bolt lane of sub-25-minute kitchens, ETA as the loudest number on every row, list sorted fastest-first.</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="402px,874px">
+<div style="min-height:100%;display:flex;flex-direction:column;background:radial-gradient(120% 55% at 50% 0%,#20233a 0%,var(--color-bg) 56%);font-family:var(--font-body);color:var(--color-text)">
+
+<div style="padding:56px 18px 12px;display:flex;align-items:center;gap:12px">
+<button onClick="{{ noop }}" style="width:40px;height:40px;flex:none;border-radius:12px;border:1px solid var(--color-accent-700);background:rgba(145,132,217,.12);box-shadow:0 0 18px rgba(145,132,217,.22);color:var(--color-accent-200);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0" style-hover="border-color:var(--color-accent)" aria-label="Profile"><svg width="20" height="20" viewBox="0 0 256 256" fill="currentColor"><path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path></svg></button>
+<div style="flex:1;min-width:0">
+<div style="display:flex;align-items:center;gap:6px">
+<svg width="22" height="22" viewBox="0 0 120 120" fill="none" style="flex:none" role="img" aria-label="Bolt">
+<rect x="4" y="4" width="112" height="112" rx="30" fill="#1b1d2c" stroke="#9184d9" stroke-width="5"></rect>
+<g transform="skewX(-8) translate(8 6)">
+<g stroke="#b6f21c" stroke-width="5.2" stroke-linecap="round" opacity=".9"><path d="M14 44h20"></path><path d="M10 56h20"></path><path d="M16 68h10"></path></g>
+<g stroke="#9184d9" stroke-width="6"><circle cx="42" cy="78" r="11.5"></circle><circle cx="74" cy="78" r="11.5"></circle></g>
+<path d="M68 34L41 66h14l-7 25 30-38H60l8-19z" fill="#1b1d2c" stroke="#1b1d2c" stroke-width="10" stroke-linejoin="round"></path>
+<path d="M68 34L41 66h14l-7 25 30-38H60l8-19z" fill="#b6f21c"></path>
+<circle cx="68" cy="24" r="12.5" fill="#1b1d2c" stroke="#1b1d2c" stroke-width="10"></circle>
+<circle cx="68" cy="24" r="12.5" fill="#9184d9"></circle>
+<path d="M78.6 17.4A12.5 12.5 0 0 1 74.6 34.6L71.2 29.2A6.1 6.1 0 0 0 73.2 20.8Z" fill="#1b1d2c" stroke="#1b1d2c" stroke-width="1.1" stroke-linejoin="round"></path>
+</g>
+</svg>
+<span style="font-family:var(--font-heading);font-size:15px;font-weight:600;letter-spacing:.02em">Bolt</span>
+<span style="width:1px;height:11px;background:rgba(233,233,237,.2)"></span>
+<span style="font-size:13px;color:rgba(233,233,237,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">12-C Gulberg III ⌄</span>
+</div>
+<div style="font-size:11.5px;color:#cdf765;margin-top:4px">Average delivery near you: 24 min</div>
+</div>
+<button onClick="{{ noop }}" style="width:40px;height:40px;flex:none;border-radius:12px;border:1px solid var(--color-divider);background:rgba(233,233,237,.05);color:var(--color-text);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0" style-hover="border-color:var(--color-accent)" aria-label="Search"><svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg></button>
+</div>
+
+<div style="margin:2px 18px 14px;border-radius:var(--radius-md);border:1px solid rgba(182,242,28,.3);background:linear-gradient(100deg,rgba(182,242,28,.1),rgba(35,37,50,.5) 70%);padding:11px 12px 12px">
+<div style="display:flex;align-items:center;gap:10px">
+<div style="flex:1;min-width:0">
+<div style="font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="color:#cdf765">{{ trackStage }}</span> <span style="color:rgba(233,233,237,.45)">· Burger Cartel</span></div>
+<div style="font-size:11px;color:rgba(233,233,237,.42);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ trackSub }}</div>
+</div>
+<span style="font-family:var(--font-heading);font-size:20px;font-weight:500;font-variant-numeric:tabular-nums;color:#cdf765;text-shadow:0 0 16px rgba(182,242,28,.4);flex:none">4′</span>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:11px">
+<sc-for list="{{ trackSteps }}" as="s" hint-placeholder-count="4">
+<div style="display:flex;flex-direction:column;gap:6px;align-items:center;min-width:0">
+<div style="width:100%;height:3px;border-radius:2px;background:{{ s.bar }};box-shadow:{{ s.glow }}"></div>
+<svg width="11" height="11" viewBox="0 0 256 256" fill="{{ s.icon }}"><path d="{{ s.path }}"></path></svg>
+</div>
+</sc-for>
+</div>
+<div style="display:flex;justify-content:space-between;gap:10px;margin-top:7px;font-size:10.5px;color:rgba(233,233,237,.4)">
+<span>{{ trackFirst }}</span><span>{{ trackLast }}</span>
+</div>
+</div>
+
+<div style="padding:0 18px 8px;display:flex;align-items:baseline;justify-content:space-between">
+<div style="display:flex;align-items:center;gap:7px">
+<svg width="14" height="14" viewBox="0 0 256 256" fill="#b6f21c"><path d="M215.79,118.17,146.6,199.09a8,8,0,0,1-13.79-7L145.35,136H88a8,8,0,0,1-6.09-13.17l69.19-80.92a8,8,0,0,1,13.79,7L152.65,104H210A8,8,0,0,1,215.79,118.17Z"></path></svg>
+<span style="font-family:var(--font-heading);font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase">Bolt lane</span>
+</div>
+<span style="font-size:11.5px;color:rgba(233,233,237,.45)">under 25 min, guaranteed</span>
+</div>
+
+<div class="scrollhide" style="display:flex;gap:10px;overflow-x:auto;padding:0 18px 16px">
+<sc-for list="{{ expressD }}" as="e" hint-placeholder-count="3">
+<div style="flex:none;width:150px;border-radius:var(--radius-lg);border:1px solid rgba(182,242,28,.28);background:linear-gradient(160deg,rgba(182,242,28,.09),rgba(30,32,43,.88));padding:11px;display:flex;flex-direction:column;gap:9px">
+<div style="height:56px;border-radius:8px;border:1px solid var(--color-neutral-800);background:repeating-linear-gradient(135deg,#262939,#262939 6px,#1e2029 6px,#1e2029 12px);position:relative">
+<span style="position:absolute;bottom:4px;left:6px;font-size:8px;letter-spacing:.08em;color:rgba(233,233,237,.3)">PHOTO</span>
+</div>
+<div style="display:flex;align-items:baseline;gap:5px">
+<span style="font-family:var(--font-heading);font-size:26px;font-weight:500;line-height:1;font-variant-numeric:tabular-nums;color:#cdf765;text-shadow:0 0 18px rgba(182,242,28,.4)">{{ e.mins }}</span>
+<span style="font-size:11px;color:rgba(233,233,237,.5)">min</span>
+</div>
+<div>
+<div style="font-family:var(--font-heading);font-size:13.5px;font-weight:500;line-height:1.3">{{ e.name }}</div>
+<div style="font-size:11.5px;color:rgba(233,233,237,.42);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">★ {{ e.rating }} · {{ e.cuisine }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+
+<div class="scrollhide" style="display:flex;gap:8px;overflow-x:auto;padding:0 18px 12px">
+<sc-for list="{{ chipsD }}" as="c" hint-placeholder-count="8">
+<button onClick="{{ c.pick }}" style="flex:none;cursor:pointer;font:inherit;font-size:13px;font-weight:500;padding:8px 14px;border-radius:10px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.fg }};box-shadow:{{ c.glow }}">{{ c.name }}</button>
+</sc-for>
+</div>
+
+<div style="padding:0 18px 12px;display:flex;align-items:center;gap:8px">
+<button onClick="{{ toggleBolt }}" style="cursor:pointer;font:inherit;font-size:11.5px;padding:6px 11px;border-radius:99px;border:1px solid {{ boltBorder }};background:{{ boltBg }};color:{{ boltFg }};display:flex;align-items:center;gap:5px"><svg width="12" height="12" viewBox="0 0 256 256" fill="currentColor"><path d="M215.79,118.17,146.6,199.09a8,8,0,0,1-13.79-7L145.35,136H88a8,8,0,0,1-6.09-13.17l69.19-80.92a8,8,0,0,1,13.79,7L152.65,104H210A8,8,0,0,1,215.79,118.17Z"></path></svg>{{ boltLabel }}</button>
+<div style="flex:1"></div>
+<button onClick="{{ cycleSortD }}" style="cursor:pointer;font:inherit;font-size:11.5px;color:var(--color-accent);background:none;border:none;padding:0;display:flex;align-items:center;gap:5px"><svg width="13" height="13" viewBox="0 0 256 256" fill="currentColor"><path d="M40,88H73a32,32,0,0,0,62,0h81a8,8,0,0,0,0-16H135a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16Zm64-24A16,16,0,1,1,88,80,16,16,0,0,1,104,64ZM216,168H199a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16h97a32,32,0,0,0,62,0h17a8,8,0,0,0,0-16Zm-48,24a16,16,0,1,1,16-16A16,16,0,0,1,168,192Z"></path></svg>{{ sortD }}</button>
+</div>
+
+<div style="padding:0 18px 8px;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:rgba(233,233,237,.4)">{{ countD }}</div>
+
+<div style="flex:1;padding:0 18px 18px;display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ listD }}" as="r" hint-placeholder-count="6">
+<div style="display:flex;gap:12px;padding:11px;border-radius:var(--radius-lg);background:linear-gradient(150deg,rgba(35,37,50,.9),rgba(28,30,40,.7));box-shadow:var(--shadow-sm)">
+<div style="width:76px;flex:none;display:flex;flex-direction:column;gap:7px">
+<div style="height:76px;border-radius:10px;border:1px solid var(--color-neutral-800);background:repeating-linear-gradient(135deg,#262939,#262939 6px,#1e2029 6px,#1e2029 12px);position:relative">
+<span style="position:absolute;bottom:5px;left:6px;font-size:8px;letter-spacing:.08em;color:rgba(233,233,237,.3)">PHOTO</span>
+</div>
+</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:5px">
+<div style="display:flex;align-items:flex-start;gap:8px">
+<div style="flex:1;font-family:var(--font-heading);font-size:15.5px;font-weight:500;line-height:1.25">{{ r.name }}</div>
+<button onClick="{{ r.fav }}" style="cursor:pointer;background:none;border:none;padding:0;color:{{ r.heartColor }};flex:none" aria-label="Save"><svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="{{ r.heartPath }}"></path></svg></button>
+</div>
+<div style="display:flex;align-items:baseline;gap:6px">
+<span style="font-family:var(--font-heading);font-size:22px;font-weight:500;line-height:1;font-variant-numeric:tabular-nums;color:#cdf765">{{ r.eta }}</span>
+</div>
+<div style="font-size:12px;color:rgba(233,233,237,.45)">{{ r.cuisine }} · {{ r.dist }}</div>
+<div style="display:flex;align-items:center;gap:7px;margin-top:1px">
+<span style="font-size:11.5px;padding:3px 7px;border-radius:6px;background:rgba(233,233,237,.06);color:rgba(233,233,237,.75)">★ {{ r.rating }} <span style="color:rgba(233,233,237,.35)">{{ r.reviews }}</span></span>
+<span style="font-size:11.5px;padding:3px 7px;border-radius:6px;background:rgba(233,233,237,.06);letter-spacing:.05em"><span style="color:var(--color-accent)">{{ r.priceOn }}</span><span style="color:rgba(233,233,237,.28)">{{ r.priceOff }}</span></span>
+<sc-if value="{{ r.tag }}" hint-placeholder-val="{{ true }}">
+<span style="font-size:11px;padding:3px 7px;border-radius:6px;background:var(--color-accent-900);color:var(--color-accent-300)">{{ r.tag }}</span>
+</sc-if>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+
+<div style="position:sticky;bottom:0;margin:0 14px 26px;border-radius:20px;border:1px solid var(--color-divider);background:rgba(35,37,50,.82);backdrop-filter:blur(16px);box-shadow:0 10px 30px rgba(0,0,0,.5);padding:9px 8px;display:flex;gap:2px">
+<sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+<button onClick="{{ noop }}" style="flex:1;cursor:pointer;background:none;border:none;padding:4px 0;display:flex;flex-direction:column;align-items:center;gap:3px;color:{{ t.color }};font:inherit"><span style="display:block;width:21px;height:21px">{{ t.icon }}</span><span style="font-size:9.5px;font-weight:500">{{ t.name }}</span></button>
+</sc-for>
+</div>
+</div>
+</x-import>
+</div>
+</div>
+<p class="dv-next">Try next: “add a live countdown to the rider strip” · “put the Bolt lightning on qualifying rows” · “now design Bolt’s restaurant page”</p>
+</section>
+
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Tiffin — home / discovery, three layouts · Lahore · chips filter the list</span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1a">
+<div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>By the book — cards, left thumbnail, promo banner, sort row. The safe one.</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="402px,874px">
+<div style="min-height:100%;display:flex;flex-direction:column;background:var(--color-bg);font-family:var(--font-body);color:var(--color-text)">
+<div style="padding:58px 18px 12px;display:flex;align-items:center;gap:12px">
+<button onClick="{{ noop }}" style="width:38px;height:38px;flex:none;border-radius:99px;border:1px solid var(--color-divider);background:var(--color-neutral-900);color:var(--color-accent);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0" style-hover="border-color:var(--color-accent)" aria-label="Profile"><svg width="20" height="20" viewBox="0 0 256 256" fill="currentColor"><path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path></svg></button>
+<div style="flex:1;min-width:0">
+<div style="font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:rgba(233,233,237,.5)">Deliver to</div>
+<div style="display:flex;align-items:center;gap:5px;margin-top:2px">
+<span style="font-family:var(--font-heading);font-size:15px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Home · 12-C Gulberg III</span>
+<svg width="13" height="13" viewBox="0 0 256 256" fill="var(--color-accent)" style="flex:none"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+</div>
+</div>
+<button onClick="{{ noop }}" style="width:38px;height:38px;flex:none;border-radius:99px;border:1px solid var(--color-divider);background:var(--color-neutral-900);color:var(--color-text);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;position:relative" style-hover="border-color:var(--color-accent)" aria-label="Cart"><svg width="19" height="19" viewBox="0 0 256 256" fill="currentColor"><path d="M216,64H176a48,48,0,0,0-96,0H40A16,16,0,0,0,24,80V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V80A16,16,0,0,0,216,64ZM128,32a32,32,0,0,1,32,32H96A32,32,0,0,1,128,32Zm88,168H40V80H216V200Z"></path></svg><span style="position:absolute;top:-2px;right:-2px;min-width:16px;height:16px;border-radius:99px;background:var(--color-accent);color:#161826;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;padding:0 4px">2</span></button>
+</div>
+
+<div style="padding:4px 18px 12px">
+<div style="display:flex;align-items:center;gap:9px;background:var(--color-neutral-900);border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:9px 11px">
+<svg width="17" height="17" viewBox="0 0 256 256" fill="rgba(233,233,237,.55)"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>
+<span style="font-size:13.5px;color:rgba(233,233,237,.45)">Craving something? Try “nihari”</span>
+</div>
+</div>
+
+<div style="padding:0 18px 14px">
+<div style="border:1px solid var(--color-accent-800);border-radius:var(--radius-lg);background:linear-gradient(120deg,var(--color-accent-900),var(--color-neutral-900) 70%);padding:14px 15px;display:flex;gap:12px;align-items:center">
+<div style="flex:1">
+<div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-300)">Tonight only</div>
+<div style="font-family:var(--font-heading);font-size:17px;font-weight:500;margin-top:4px;line-height:1.25">Free delivery over Rs 1,500</div>
+<div style="font-size:12px;color:rgba(233,233,237,.55);margin-top:3px">Across 40+ kitchens in Gulberg</div>
+</div>
+<div style="width:64px;height:64px;flex:none;border-radius:var(--radius-md);border:1px dashed var(--color-accent-700);background:rgba(145,132,217,.08);display:flex;align-items:center;justify-content:center;font-size:9px;letter-spacing:.08em;color:var(--color-accent-400);text-align:center">PROMO<br>ART</div>
+</div>
+</div>
+
+<div class="scrollhide" style="display:flex;gap:7px;overflow-x:auto;padding:0 18px 13px">
+<sc-for list="{{ chipsA }}" as="c" hint-placeholder-count="8">
+<button onClick="{{ c.pick }}" style="flex:none;cursor:pointer;font:inherit;font-size:13px;font-weight:500;padding:7px 13px;border-radius:99px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.fg }}">{{ c.name }}</button>
+</sc-for>
+</div>
+
+<div style="padding:0 18px 10px;display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+<div style="font-family:var(--font-heading);font-size:15px;font-weight:500">{{ countA }}</div>
+<button onClick="{{ cycleSortA }}" style="cursor:pointer;font:inherit;font-size:12px;color:var(--color-accent);background:none;border:none;padding:0;display:flex;align-items:center;gap:5px"><svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor"><path d="M40,88H73a32,32,0,0,0,62,0h81a8,8,0,0,0,0-16H135a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16Zm64-24A16,16,0,1,1,88,80,16,16,0,0,1,104,64ZM216,168H199a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16h97a32,32,0,0,0,62,0h17a8,8,0,0,0,0-16Zm-48,24a16,16,0,1,1,16-16A16,16,0,0,1,168,192Z"></path></svg>{{ sortA }}</button>
+</div>
+
+<div style="flex:1;padding:0 18px 16px;display:flex;flex-direction:column;gap:2px">
+<sc-for list="{{ listA }}" as="r" hint-placeholder-count="6">
+<div style="display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--color-divider)">
+<div style="width:84px;height:84px;flex:none;border-radius:var(--radius-md);border:1px solid var(--color-neutral-800);background:repeating-linear-gradient(135deg,#22242f,#22242f 6px,#1c1e28 6px,#1c1e28 12px);display:flex;align-items:flex-end;justify-content:flex-start;padding:6px;font-size:8.5px;letter-spacing:.07em;color:rgba(233,233,237,.35)">PHOTO</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+<div style="display:flex;align-items:flex-start;gap:8px">
+<div style="flex:1;font-family:var(--font-heading);font-size:15.5px;font-weight:500;line-height:1.25">{{ r.name }}</div>
+<button onClick="{{ r.fav }}" style="cursor:pointer;background:none;border:none;padding:0;color:{{ r.heartColor }};flex:none" aria-label="Save"><svg width="19" height="19" viewBox="0 0 256 256" fill="currentColor"><path d="{{ r.heartPath }}"></path></svg></button>
+</div>
+<div style="font-size:12.5px;color:rgba(233,233,237,.5)">{{ r.cuisine }} · {{ r.dist }}</div>
+<div style="display:flex;align-items:center;gap:8px;font-size:12.5px;margin-top:1px">
+<span style="display:flex;align-items:center;gap:4px;color:var(--color-text)"><svg width="13" height="13" viewBox="0 0 256 256" fill="var(--color-accent)"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path></svg>{{ r.rating }}</span>
+<span style="color:rgba(233,233,237,.35)">({{ r.reviews }})</span>
+<span style="color:rgba(233,233,237,.25)">|</span>
+<span style="color:rgba(233,233,237,.65)">{{ r.eta }}</span>
+<span style="color:rgba(233,233,237,.25)">|</span>
+<span style="font-variant-numeric:tabular-nums;letter-spacing:.04em"><span style="color:var(--color-accent)">{{ r.priceOn }}</span><span style="color:rgba(233,233,237,.25)">{{ r.priceOff }}</span></span>
+</div>
+<sc-if value="{{ r.tag }}" hint-placeholder-val="{{ true }}">
+<div style="margin-top:2px"><span style="display:inline-block;font-size:10.5px;padding:3px 7px;border-radius:var(--radius-sm);background:var(--color-accent-900);color:var(--color-accent-300)">{{ r.tag }}</span></div>
+</sc-if>
+</div>
+</div>
+</sc-for>
+</div>
+
+<div style="position:sticky;bottom:0;background:linear-gradient(to top,var(--color-bg) 60%,rgba(22,24,38,.86));backdrop-filter:blur(12px);border-top:1px solid var(--color-divider);padding:9px 14px 30px;display:flex;gap:4px">
+<sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+<button onClick="{{ noop }}" style="flex:1;cursor:pointer;background:none;border:none;padding:4px 0;display:flex;flex-direction:column;align-items:center;gap:4px;color:{{ t.color }};font:inherit"><span style="display:block;width:22px;height:22px">{{ t.icon }}</span><span style="font-size:10px;font-weight:500">{{ t.name }}</span></button>
+</sc-for>
+</div>
+</div>
+</x-import>
+</div>
+
+<div class="dv-opt" id="1b">
+<div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Editorial — no cards, hairline rules, chips as text tabs, big type. Dense and calm.</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="402px,874px">
+<div style="min-height:100%;display:flex;flex-direction:column;background:var(--color-bg);font-family:var(--font-body);color:var(--color-text)">
+<div style="padding:56px 20px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:14px">
+<div style="min-width:0">
+<div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(233,233,237,.45)">Delivering to</div>
+<div style="font-family:var(--font-heading);font-size:21px;font-weight:500;letter-spacing:-.01em;margin-top:5px;line-height:1.2">12-C Gulberg III <span style="color:var(--color-accent);font-size:15px">Change</span></div>
+</div>
+<button onClick="{{ noop }}" style="width:40px;height:40px;flex:none;border-radius:99px;border:1px solid var(--color-accent-700);background:var(--color-accent-900);color:var(--color-accent-200);font:inherit;font-size:14px;font-weight:600;cursor:pointer;padding:0" style-hover="border-color:var(--color-accent)">SA</button>
+</div>
+
+<div style="padding:18px 20px 0">
+<div style="display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--color-divider);padding-bottom:9px">
+<svg width="17" height="17" viewBox="0 0 256 256" fill="rgba(233,233,237,.5)"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>
+<span style="font-size:14px;color:rgba(233,233,237,.42)">Search kitchens and dishes</span>
+</div>
+</div>
+
+<div style="margin:16px 20px 0;border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:11px 13px;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+<div style="font-size:13px"><span style="color:var(--color-accent)">On the way</span> <span style="color:rgba(233,233,237,.45)">· Kolachi Biryani House</span></div>
+<div style="font-size:12px;color:rgba(233,233,237,.6);font-variant-numeric:tabular-nums">12 min</div>
+</div>
+<div style="height:2px;background:var(--color-neutral-800);border-radius:2px;overflow:hidden"><div style="width:64%;height:100%;background:var(--color-accent)"></div></div>
+</div>
+
+<div class="scrollhide" style="display:flex;gap:18px;overflow-x:auto;padding:20px 20px 0">
+<sc-for list="{{ chipsB }}" as="c" hint-placeholder-count="8">
+<button onClick="{{ c.pick }}" style="flex:none;cursor:pointer;background:none;border:none;padding:0 0 8px;font:inherit;font-family:var(--font-heading);font-size:14.5px;font-weight:500;color:{{ c.fg }};border-bottom:2px solid {{ c.border }}">{{ c.name }}</button>
+</sc-for>
+</div>
+<div style="height:1px;background:var(--color-divider);margin:-1px 0 0"></div>
+
+<div style="padding:16px 20px 6px;display:flex;align-items:baseline;justify-content:space-between">
+<div style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(233,233,237,.45)">{{ countB }}</div>
+<button onClick="{{ cycleSortB }}" style="cursor:pointer;font:inherit;font-size:12px;color:var(--color-accent);background:none;border:none;padding:0">{{ sortB }} ↓</button>
+</div>
+
+<div style="flex:1;padding:0 20px 20px">
+<sc-for list="{{ listB }}" as="r" hint-placeholder-count="6">
+<div style="display:flex;gap:14px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--color-divider)">
+<div style="flex:1;min-width:0">
+<div style="display:flex;align-items:baseline;gap:8px">
+<span style="font-family:var(--font-heading);font-size:19px;font-weight:500;letter-spacing:-.015em;line-height:1.2">{{ r.name }}</span>
+</div>
+<div style="font-size:12.5px;color:rgba(233,233,237,.45);margin-top:5px">{{ r.cuisine }} · {{ r.dist }} · <span style="letter-spacing:.05em">{{ r.price }}</span></div>
+<div style="display:flex;align-items:center;gap:14px;margin-top:9px;font-size:12.5px">
+<span style="color:var(--color-accent-200)">★ {{ r.rating }} <span style="color:rgba(233,233,237,.35)">{{ r.reviews }}</span></span>
+<span style="color:rgba(233,233,237,.6);font-variant-numeric:tabular-nums">{{ r.eta }}</span>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+<button onClick="{{ r.fav }}" style="cursor:pointer;background:none;border:none;padding:0;color:{{ r.heartColor }}" aria-label="Save"><svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="{{ r.heartPath }}"></path></svg></button>
+<div style="width:62px;height:62px;border-radius:var(--radius-sm);border:1px solid var(--color-neutral-800);background:repeating-linear-gradient(135deg,#22242f,#22242f 6px,#1c1e28 6px,#1c1e28 12px)"></div>
+</div>
+</div>
+</sc-for>
+</div>
+
+<div style="position:sticky;bottom:0;background:var(--color-bg);border-top:1px solid var(--color-divider);padding:11px 22px 30px;display:flex;justify-content:space-between;gap:6px">
+<sc-for list="{{ tabsB }}" as="t" hint-placeholder-count="5">
+<button onClick="{{ noop }}" style="cursor:pointer;background:none;border:none;padding:0;font:inherit;font-size:11.5px;font-weight:500;letter-spacing:.02em;color:{{ t.color }}">{{ t.name }}</button>
+</sc-for>
+</div>
+</div>
+</x-import>
+</div>
+
+<div class="dv-opt" id="1c">
+<div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Lit — full-bleed featured kitchen, accent glow on the live chip and rating, glass tab bar.</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="402px,874px">
+<div style="min-height:100%;display:flex;flex-direction:column;background:radial-gradient(120% 60% at 50% 0%,#20233a 0%,var(--color-bg) 58%);font-family:var(--font-body);color:var(--color-text)">
+<div style="padding:56px 18px 14px;display:flex;align-items:center;gap:12px">
+<button onClick="{{ noop }}" style="width:40px;height:40px;flex:none;border-radius:12px;border:1px solid var(--color-accent-700);background:rgba(145,132,217,.12);box-shadow:0 0 18px rgba(145,132,217,.22);color:var(--color-accent-200);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0" aria-label="Profile"><svg width="20" height="20" viewBox="0 0 256 256" fill="currentColor"><path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path></svg></button>
+<div style="flex:1;min-width:0">
+<div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent-400)">Deliver to</div>
+<div style="font-family:var(--font-heading);font-size:15.5px;font-weight:500;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">12-C Gulberg III, Lahore ⌄</div>
+</div>
+<button onClick="{{ noop }}" style="width:40px;height:40px;flex:none;border-radius:12px;border:1px solid var(--color-divider);background:rgba(233,233,237,.05);color:var(--color-text);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0" aria-label="Search"><svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg></button>
+</div>
+
+<div style="padding:0 18px 16px">
+<div style="position:relative;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--color-neutral-800);height:184px;background:repeating-linear-gradient(115deg,#252838,#252838 9px,#1d1f2b 9px,#1d1f2b 18px)">
+<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(15,17,25,.94) 6%,rgba(15,17,25,.15) 62%)"></div>
+<div style="position:absolute;top:12px;left:12px;font-size:9.5px;letter-spacing:.12em;padding:5px 9px;border-radius:99px;background:rgba(145,132,217,.16);border:1px solid var(--color-accent-700);color:var(--color-accent-200)">FEATURED TONIGHT</div>
+<div style="position:absolute;left:14px;right:14px;bottom:12px">
+<div style="font-family:var(--font-heading);font-size:22px;font-weight:500;letter-spacing:-.015em">Kolachi Biryani House</div>
+<div style="display:flex;align-items:center;gap:9px;font-size:12.5px;color:rgba(233,233,237,.7);margin-top:6px">
+<span style="color:var(--color-accent-200);text-shadow:0 0 14px rgba(145,132,217,.55)">★ 4.8</span>
+<span style="color:rgba(233,233,237,.3)">·</span><span>20–30 min</span>
+<span style="color:rgba(233,233,237,.3)">·</span><span style="letter-spacing:.05em"><span style="color:var(--color-accent)">$</span><span style="color:rgba(233,233,237,.28)">$$</span></span>
+<span style="color:rgba(233,233,237,.3)">·</span><span>Biryani</span>
+</div>
+</div>
+</div>
+</div>
+
+<div class="scrollhide" style="display:flex;gap:8px;overflow-x:auto;padding:0 18px 16px">
+<sc-for list="{{ chipsC }}" as="c" hint-placeholder-count="8">
+<button onClick="{{ c.pick }}" style="flex:none;cursor:pointer;font:inherit;font-size:13px;font-weight:500;padding:8px 14px;border-radius:10px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.fg }};box-shadow:{{ c.glow }}">{{ c.name }}</button>
+</sc-for>
+</div>
+
+<div style="padding:0 18px 12px;display:flex;align-items:center;gap:7px;overflow-x:auto" class="scrollhide">
+<sc-for list="{{ filtersC }}" as="f" hint-placeholder-count="4">
+<button onClick="{{ f.toggle }}" style="flex:none;cursor:pointer;font:inherit;font-size:11.5px;padding:6px 11px;border-radius:99px;border:1px solid {{ f.border }};background:{{ f.bg }};color:{{ f.fg }}">{{ f.name }}</button>
+</sc-for>
+</div>
+
+<div style="flex:1;padding:0 18px 18px;display:flex;flex-direction:column;gap:11px">
+<sc-for list="{{ listC }}" as="r" hint-placeholder-count="6">
+<div style="display:flex;gap:12px;padding:11px;border-radius:var(--radius-lg);background:linear-gradient(150deg,rgba(35,37,50,.9),rgba(28,30,40,.7));box-shadow:var(--shadow-sm)">
+<div style="width:76px;height:76px;flex:none;border-radius:10px;border:1px solid var(--color-neutral-800);background:repeating-linear-gradient(135deg,#262939,#262939 6px,#1e2029 6px,#1e2029 12px);position:relative">
+<span style="position:absolute;bottom:5px;left:6px;font-size:8px;letter-spacing:.08em;color:rgba(233,233,237,.3)">PHOTO</span>
+</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:5px">
+<div style="display:flex;align-items:flex-start;gap:8px">
+<div style="flex:1;font-family:var(--font-heading);font-size:15.5px;font-weight:500;line-height:1.25">{{ r.name }}</div>
+<button onClick="{{ r.fav }}" style="cursor:pointer;background:none;border:none;padding:0;color:{{ r.heartColor }};flex:none" aria-label="Save"><svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="{{ r.heartPath }}"></path></svg></button>
+</div>
+<div style="font-size:12px;color:rgba(233,233,237,.45)">{{ r.cuisine }} · {{ r.dist }}</div>
+<div style="display:flex;align-items:center;gap:7px;margin-top:1px">
+<span style="font-size:11.5px;padding:3px 7px;border-radius:6px;background:rgba(145,132,217,.14);border:1px solid var(--color-accent-800);color:var(--color-accent-200)">★ {{ r.rating }}</span>
+<span style="font-size:11.5px;padding:3px 7px;border-radius:6px;background:rgba(233,233,237,.06);color:rgba(233,233,237,.7);font-variant-numeric:tabular-nums">{{ r.eta }}</span>
+<span style="font-size:11.5px;padding:3px 7px;border-radius:6px;background:rgba(233,233,237,.06);letter-spacing:.05em"><span style="color:var(--color-accent)">{{ r.priceOn }}</span><span style="color:rgba(233,233,237,.28)">{{ r.priceOff }}</span></span>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+
+<div style="position:sticky;bottom:0;margin:0 14px 26px;border-radius:20px;border:1px solid var(--color-divider);background:rgba(35,37,50,.82);backdrop-filter:blur(16px);box-shadow:0 10px 30px rgba(0,0,0,.5);padding:9px 8px;display:flex;gap:2px">
+<sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+<button onClick="{{ noop }}" style="flex:1;cursor:pointer;background:none;border:none;padding:4px 0;display:flex;flex-direction:column;align-items:center;gap:3px;color:{{ t.color }};font:inherit"><span style="display:block;width:21px;height:21px">{{ t.icon }}</span><span style="font-size:9.5px;font-weight:500">{{ t.name }}</span></button>
+</sc-for>
+</div>
+</div>
+</x-import>
+</div>
+
+</div>
+<p class="dv-next">Try next: “take <a class="dv-oid" href="#1b">1b</a>’s type into <a class="dv-oid" href="#1a">1a</a>” · “make <a class="dv-oid" href="#1c">1c</a>’s cards taller with a dish strip” · “now design the restaurant page”</p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1360,&quot;height&quot;:1040}}">
+const LIME = '#b6f21c', LIME_TXT = '#cdf765';
+const P_CHECK = 'M104,192a8.5,8.5,0,0,1-6-2.5L34.5,126a8.5,8.5,0,0,1,12-12L104,171.5,209.5,66a8.5,8.5,0,0,1,12,12l-111.5,111.5A8.5,8.5,0,0,1,104,192Z';
+const P_DOT = 'M128,72a56,56,0,1,0,56,56A56.06,56.06,0,0,0,128,72Z';
+const P_RING = 'M128,32a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,32Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,208Z';
+const TRACK = [
+  { label: 'Preparing order', time: '7:41' },
+  { label: 'Order picked up', time: '7:52' },
+  { label: 'Around the corner', time: 'now' },
+  { label: 'Delivered', time: '~8:04' },
+];
+const TRACK_AT = 2;
+
+const CATS = ['All', 'Biryani', 'Pasta', 'Pizza', 'Fast Food', 'Desi', 'Pan Asian', 'Desserts'];
+
+const R = [
+  { id: 'kol', name: 'Kolachi Biryani House', cat: 'Biryani', cuisine: 'Sindhi biryani, BBQ', rating: 4.8, reviews: '3.4k', eta: '20–30 min', price: 1, dist: '1.4 km', tag: 'Free delivery' },
+  { id: 'bnd', name: 'Bundu Grill & Karahi', cat: 'Desi', cuisine: 'Desi, charcoal grill', rating: 4.6, reviews: '1.2k', eta: '25–35 min', price: 2, dist: '2.1 km', tag: '' },
+  { id: 'crt', name: 'Burger Cartel', cat: 'Fast Food', cuisine: 'Burgers, loaded fries', rating: 4.2, reviews: '5.6k', eta: '15–25 min', price: 1, dist: '0.9 km', tag: 'Buy 1 get 1' },
+  { id: 'ost', name: 'Osteria Verde', cat: 'Pasta', cuisine: 'Hand-rolled pasta', rating: 4.4, reviews: '610', eta: '35–45 min', price: 3, dist: '4.6 km', tag: '' },
+  { id: 'dgh', name: 'Lahore Dough Co.', cat: 'Pizza', cuisine: 'Sourdough pizza', rating: 4.5, reviews: '2.1k', eta: '30–40 min', price: 2, dist: '3.2 km', tag: '' },
+  { id: 'wok', name: 'Wok Republic', cat: 'Pan Asian', cuisine: 'Thai, Chinese, ramen', rating: 4.3, reviews: '890', eta: '30–45 min', price: 2, dist: '3.8 km', tag: '' },
+  { id: 'sug', name: 'Sugar & Saffron', cat: 'Desserts', cuisine: 'Kulfi, cakes, brownies', rating: 4.7, reviews: '1.4k', eta: '25–35 min', price: 2, dist: '2.7 km', tag: 'New' },
+];
+
+const SORTS = ['Recommended', 'Fastest', 'Top rated', 'Cheapest'];
+const etaMin = r => parseInt(r.eta, 10);
+
+const PH = {
+  Home: 'M218.83,103.77l-80-75.48a1.14,1.14,0,0,1-.11-.11,16,16,0,0,0-21.53,0l-.11.11L37.17,103.77A16,16,0,0,0,32,115.55V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V160h32v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V115.55A16,16,0,0,0,218.83,103.77ZM208,208H160V160a16,16,0,0,0-16-16H112a16,16,0,0,0-16,16v48H48V115.55l.11-.1L128,40l79.9,75.43.11.1Z',
+  Search: 'M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z',
+  Orders: 'M216,64H176a48,48,0,0,0-96,0H40A16,16,0,0,0,24,80V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V80A16,16,0,0,0,216,64ZM128,32a32,32,0,0,1,32,32H96A32,32,0,0,1,128,32Zm88,168H40V80H216V200Z',
+  Saved: 'M178,40c-20.65,0-38.73,8.88-50,23.89C116.73,48.88,98.65,40,78,40a62.07,62.07,0,0,0-62,62c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,228.66,240,172,240,102A62.07,62.07,0,0,0,178,40ZM128,214.8C109.74,204.16,32,155.69,32,102A46.06,46.06,0,0,1,78,56c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,155.61,146.24,204.15,128,214.8Z',
+  Profile: 'M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z',
+};
+const HEART_FILL = 'M240,102c0,70-103.79,126.66-108.21,129a8,8,0,0,1-7.58,0C119.79,228.66,16,172,16,102A62.07,62.07,0,0,1,78,40c20.65,0,38.73,8.88,50,23.89C139.27,48.88,157.35,40,178,40A62.07,62.07,0,0,1,240,102Z';
+
+function icon(name, color) {
+  return React.createElement('svg',
+    { width: '100%', height: '100%', viewBox: '0 0 256 256', fill: color },
+    React.createElement('path', { d: PH[name] }));
+}
+
+class Component extends DCLogic {
+  state = {
+    catA: 'All', catB: 'All', catC: 'All', catD: 'All',
+    sortA: 0, sortB: 0, sortD: 1, boltOnly: false,
+    favs: { kol: true },
+    filters: { free: true, fast: false, rating: false, veg: false },
+  };
+
+  toggleFav(id) {
+    this.setState(s => ({ favs: { ...s.favs, [id]: !s.favs[id] } }));
+  }
+
+  rows(cat, sortIdx) {
+    let out = R.filter(r => cat === 'All' || r.cat === cat);
+    const s = SORTS[sortIdx || 0];
+    if (s === 'Fastest') out = [...out].sort((a, b) => etaMin(a) - etaMin(b));
+    if (s === 'Top rated') out = [...out].sort((a, b) => b.rating - a.rating);
+    if (s === 'Cheapest') out = [...out].sort((a, b) => a.price - b.price);
+    return out.map(r => {
+      const fav = !!this.state.favs[r.id];
+      return {
+        ...r,
+        priceOn: '$'.repeat(r.price),
+        priceOff: '$'.repeat(3 - r.price),
+        price: '$'.repeat(r.price) + '·'.repeat(0) ,
+        rating: r.rating.toFixed(1),
+        fav: () => this.toggleFav(r.id),
+        heartColor: fav ? 'var(--color-accent)' : 'rgba(233,233,237,.38)',
+        heartPath: fav ? HEART_FILL : PH.Saved,
+        tag: r.tag || null,
+      };
+    });
+  }
+
+  chips(active, set, style) {
+    return CATS.map(name => {
+      const on = name === active;
+      if (style === 'text') {
+        return { name, pick: () => set(name), fg: on ? 'var(--color-text)' : 'rgba(233,233,237,.4)', border: on ? 'var(--color-accent)' : 'transparent' };
+      }
+      if (style === 'glow') {
+        return {
+          name, pick: () => set(name),
+          bg: on ? 'rgba(145,132,217,.16)' : 'rgba(233,233,237,.04)',
+          fg: on ? 'var(--color-accent-200)' : 'rgba(233,233,237,.62)',
+          border: on ? 'var(--color-accent)' : 'var(--color-divider)',
+          glow: on ? '0 0 18px rgba(145,132,217,.28)' : 'none',
+        };
+      }
+      return {
+        name, pick: () => set(name),
+        bg: on ? 'rgba(145,132,217,.14)' : 'transparent',
+        fg: on ? 'var(--color-accent-200)' : 'rgba(233,233,237,.6)',
+        border: on ? 'var(--color-accent)' : 'var(--color-divider)',
+      };
+    });
+  }
+
+  renderVals() {
+    const tabNames = ['Home', 'Search', 'Orders', 'Saved', 'Profile'];
+    const tabs = tabNames.map((name, i) => ({
+      name,
+      color: i === 0 ? 'var(--color-accent)' : 'rgba(233,233,237,.45)',
+      icon: icon(name, i === 0 ? '#9184d9' : 'rgba(233,233,237,.45)'),
+    }));
+    const tabsB = tabNames.map((name, i) => ({ name, color: i === 0 ? 'var(--color-text)' : 'rgba(233,233,237,.38)' }));
+
+    const listA = this.rows(this.state.catA, this.state.sortA);
+    const listB = this.rows(this.state.catB, this.state.sortB);
+    const listC = this.rows(this.state.catC, 0).filter(r => !this.state.filters.fast || etaMin(r) <= 25);
+
+    let listD = this.rows(this.state.catD, this.state.sortD);
+    if (this.state.boltOnly) listD = listD.filter(r => etaMin(r) <= 25);
+    const express = [...R].sort((a, b) => etaMin(a) - etaMin(b)).slice(0, 3).map(r => ({
+      name: r.name, mins: String(etaMin(r)), cuisine: r.cuisine.split(',')[0], rating: r.rating.toFixed(1), dist: r.dist,
+    }));
+
+    const f = this.state.filters;
+    const chip = (key, name) => ({
+      name, toggle: () => this.setState(s => ({ filters: { ...s.filters, [key]: !s.filters[key] } })),
+      bg: f[key] ? 'rgba(145,132,217,.14)' : 'transparent',
+      fg: f[key] ? 'var(--color-accent-200)' : 'rgba(233,233,237,.55)',
+      border: f[key] ? 'var(--color-accent-700)' : 'var(--color-divider)',
+    });
+
+    const n = l => l.length + (l.length === 1 ? ' kitchen open' : ' kitchens open');
+
+    return {
+      noop: () => {},
+      trackStage: TRACK[TRACK_AT].label,
+      trackSub: 'Two streets away · handing off at 12-C Gulberg III',
+      trackFirst: 'Ordered ' + TRACK[0].time,
+      trackLast: 'Delivered ' + TRACK[3].time,
+      trackSteps: TRACK.map((t, i) => {
+        const done = i < TRACK_AT, now = i === TRACK_AT;
+        return {
+          path: done ? P_CHECK : now ? P_DOT : P_RING,
+          icon: done ? LIME : now ? LIME_TXT : 'rgba(233,233,237,.28)',
+          bar: done ? LIME : now ? LIME_TXT : 'var(--color-neutral-800)',
+          glow: now ? '0 0 12px rgba(182,242,28,.6)' : 'none',
+        };
+      }),
+      tabs, tabsB,
+      chipsA: this.chips(this.state.catA, v => this.setState({ catA: v }), 'pill'),
+      chipsB: this.chips(this.state.catB, v => this.setState({ catB: v }), 'text'),
+      chipsC: this.chips(this.state.catC, v => this.setState({ catC: v }), 'glow'),
+      listA, listB, listC,
+      countA: n(listA), countB: n(listB),
+      sortA: SORTS[this.state.sortA], sortB: SORTS[this.state.sortB],
+      cycleSortA: () => this.setState(s => ({ sortA: (s.sortA + 1) % SORTS.length })),
+      cycleSortB: () => this.setState(s => ({ sortB: (s.sortB + 1) % SORTS.length })),
+      filtersC: [chip('free', 'Free delivery'), chip('fast', 'Under 30 min'), chip('rating', 'Rating 4.5+'), chip('veg', 'Veg friendly')],
+
+      chipsD: this.chips(this.state.catD, v => this.setState({ catD: v }), 'glow'),
+      listD, countD: listD.length + (listD.length === 1 ? ' kitchen' : ' kitchens') + ' · sorted by ' + SORTS[this.state.sortD].toLowerCase(),
+      sortD: SORTS[this.state.sortD],
+      cycleSortD: () => this.setState(s => ({ sortD: (s.sortD + 1) % SORTS.length })),
+      expressD: express,
+      boltOnly: this.state.boltOnly,
+      boltLabel: this.state.boltOnly ? 'Bolt lane only · on' : 'Bolt lane only',
+      boltBg: this.state.boltOnly ? 'rgba(182,242,28,.11)' : 'transparent',
+      boltFg: this.state.boltOnly ? LIME_TXT : 'rgba(233,233,237,.55)',
+      boltBorder: this.state.boltOnly ? 'rgba(182,242,28,.5)' : 'var(--color-divider)',
+      toggleBolt: () => this.setState(s => ({ boltOnly: !s.boltOnly })),
+    };
+  }
+}
+</script>
+</body>
+</html>

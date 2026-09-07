@@ -1,369 +1,919 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Kettle &amp; Crumb</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bolt — fast food, actually fast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
 <style>
-  :root {
-    --ground: #FBFAF8;
-    --surface: #FFFFFF;
-    --ink: #17181A;
-    --muted: #6B6F72;
-    --line: #E6E3DD;
-    --accent: #1F6F4A;
-    --accent-ink: #FFFFFF;
-    --shadow: 0 1px 2px rgba(23,24,26,.06), 0 8px 24px rgba(23,24,26,.05);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --ground: #131414;
-      --surface: #1B1C1D;
-      --ink: #F2F1EE;
-      --muted: #9A9C9E;
-      --line: #2C2E2F;
-      --accent: #4FC08D;
-      --accent-ink: #10231A;
-      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
-    }
-  }
-  :root[data-theme="dark"] {
-    --ground: #131414;
-    --surface: #1B1C1D;
-    --ink: #F2F1EE;
-    --muted: #9A9C9E;
-    --line: #2C2E2F;
-    --accent: #4FC08D;
-    --accent-ink: #10231A;
-    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
-  }
+/* ---------------------------------------------------------------------------
+   Nocturne tokens, ported from the Bolt handoff (Design tokens table).
+   Two accents with non-interchangeable jobs: purple is brand and chrome,
+   lime is speed and time only. Neither ever floods an area — lines, small
+   tints at low alpha, and glows.
+--------------------------------------------------------------------------- */
+:root{
+  --bg:#161826;
+  --surface:#232532;
+  --plate:#1b1d2c;
+  --text:#e9e9ed;
+  --muted:rgba(233,233,237,.55);
+  --faint:rgba(233,233,237,.42);
+  --fainter:rgba(233,233,237,.35);
+  --faintest:rgba(233,233,237,.28);
+  --divider:#2f3242;
+  --n800:#3a3d4d;
+  --n700:#4a4e60;
 
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--ground);
-    color: var(--ink);
-    font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
-  .wrap { max-width: 960px; margin: 0 auto; padding: 32px 20px 72px; }
+  --accent:#9184d9;
+  --a200:#c9c2ec;
+  --a300:#a99fe1;
+  --a700:#7a6bc9;
+  --a800:#453f6e;
+  --a900:#2a2647;
 
-  header { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 32px; }
-  .brand { font-size: 20px; font-weight: 650; letter-spacing: -.02em; }
-  .brand span { color: var(--accent); }
-  .tag { color: var(--muted); font-size: 13px; }
+  --lime:#b6f21c;
+  --lime-txt:#cdf765;
 
-  h2 {
-    font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
-    color: var(--muted); font-weight: 600; margin: 0 0 12px;
-  }
-  section + section { margin-top: 40px; }
+  --radius-sm:6px;
+  --radius-md:8px;
+  --radius-lg:12px;
+  --shadow-sm:0 0 0 1px #3a3d4d;
 
-  #menu { display: flex; flex-direction: column; gap: 26px; }
-  .cat-name {
-    display: flex; align-items: center; gap: 12px;
-    font-size: 13px; font-weight: 600; letter-spacing: -.01em;
-    margin: 0 0 10px; color: var(--ink);
-  }
-  .cat-name::after { content: ""; flex: 1; height: 1px; background: var(--line); }
-  .cat-count { color: var(--muted); font-weight: 450; font-variant-numeric: tabular-nums; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
-  .item {
-    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
-    padding: 14px; display: flex; flex-direction: column; gap: 4px; box-shadow: var(--shadow);
-  }
-  .thumb { font-size: 28px; line-height: 1; margin-bottom: 6px; }
-  .name { font-weight: 550; }
-  .desc { color: var(--muted); font-size: 13px; flex: 1; }
-  .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 10px; }
-  .price { font-variant-numeric: tabular-nums; font-weight: 550; }
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
 
-  button {
-    font: inherit; cursor: pointer; border-radius: 7px; border: 1px solid var(--line);
-    background: var(--surface); color: var(--ink); padding: 6px 12px;
-  }
-  button:hover { border-color: var(--accent); color: var(--accent); }
-  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 550; }
-  .primary:hover { color: var(--accent-ink); filter: brightness(1.08); }
-  .primary:disabled { opacity: .4; cursor: not-allowed; filter: none; }
-  .qty { width: 28px; height: 28px; padding: 0; line-height: 1; }
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:14px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+.ell{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.scrollhide{scrollbar-width:none}
+.scrollhide::-webkit-scrollbar{display:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); }
-  .panel > * { padding: 12px 16px; }
-  .panel > * + * { border-top: 1px solid var(--line); }
-  .line { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-  .line .grow { flex: 1; }
-  .empty { color: var(--muted); font-size: 14px; }
-  .total { font-weight: 650; font-variant-numeric: tabular-nums; }
-  .count { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 18px; text-align: center; }
+/* Placeholder photography — hatch fill plus a caption, per the handoff.
+   Replace with real imagery at the same box sizes. */
+.photo{position:relative;border:1px solid var(--n800);background:repeating-linear-gradient(135deg,#262939,#262939 6px,#1e2029 6px,#1e2029 12px)}
+.photo::after{content:"PHOTO";position:absolute;bottom:5px;left:6px;font-size:8px;letter-spacing:.08em;color:rgba(233,233,237,.3)}
 
-  .orders { display: flex; flex-direction: column; gap: 12px; }
-  .order-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-  .oid { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; color: var(--muted); }
-  .summary { color: var(--muted); font-size: 13px; margin-top: 2px; }
+/* --- shared bits ---------------------------------------------------------- */
+.eta{font-weight:500;line-height:1;color:var(--lime-txt)}
+.badge{
+  display:inline-flex;align-items:center;gap:5px;font-size:11.5px;
+  padding:4px 8px;border-radius:var(--radius-sm);background:rgba(233,233,237,.06);
+  color:rgba(233,233,237,.78);
+}
+.badge .reviews{color:var(--fainter)}
+.badge .star{color:var(--accent)}
+.price-on{color:var(--accent)}
+.price-off{color:var(--faintest)}
+.tag{font-size:11px;padding:4px 8px;border-radius:var(--radius-sm);background:var(--a900);color:var(--a300)}
+.btn-outline{
+  background:transparent;border:1px solid var(--accent);border-radius:var(--radius-md);
+  color:var(--a200);padding:7px 14px;font-size:13px;
+}
+.btn-outline:hover{background:rgba(145,132,217,.12)}
 
-  .track { display: flex; gap: 4px; margin-top: 14px; }
-  .step { flex: 1; display: flex; flex-direction: column; gap: 6px; }
-  .bar { height: 3px; border-radius: 2px; background: var(--line); transition: background .4s ease; }
-  .step.done .bar { background: var(--accent); }
-  .step.now .bar { background: var(--accent); animation: pulse 1.4s ease-in-out infinite; }
-  .step-label { font-size: 11px; color: var(--muted); }
-  .step.done .step-label, .step.now .step-label { color: var(--ink); }
-  @keyframes pulse { 50% { opacity: .35; } }
-  @media (prefers-reduced-motion: reduce) { .step.now .bar { animation: none; } }
+/* Order tracker — one stage machine, two presentations. */
+.track-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.track-bar{height:3px;border-radius:2px}
+.track-bar.done{background:var(--lime)}
+.track-bar.now{background:var(--lime-txt);box-shadow:0 0 12px rgba(182,242,28,.65)}
+.track-bar.next{background:var(--n800)}
+.track-glyph.done{color:var(--lime)}
+.track-glyph.now{color:var(--lime-txt)}
+.track-glyph.next{color:var(--faintest)}
+.track-label.done,.track-label.now{color:var(--text)}
+.track-label.next{color:rgba(233,233,237,.4)}
+.track-time.now{color:var(--lime-txt)}
+.track-time.done,.track-time.next{color:var(--fainter)}
 
-  .eta { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .pill {
-    font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
-    padding: 3px 8px; border-radius: 99px; background: var(--line); color: var(--ink);
-  }
-  .pill.live { background: var(--accent); color: var(--accent-ink); }
+/* ===========================================================================
+   WEB — home / discovery. 1360px content column, 40px gutters.
+=========================================================================== */
+.web{min-height:100vh;background:radial-gradient(80% 42% at 22% 0%,#1e2135 0%,var(--bg) 62%)}
 
-  footer { margin-top: 48px; color: var(--muted); font-size: 12px; text-align: center; }
+.nav{
+  position:sticky;top:0;z-index:20;background:rgba(22,24,38,.86);
+  backdrop-filter:blur(16px);border-bottom:1px solid var(--divider);
+}
+.nav-in{
+  max-width:1360px;margin:0 auto;padding:12px 40px;min-height:64px;
+  display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;
+}
+.brand{display:flex;align-items:center;gap:8px;flex:none}
+.brand-name{font-size:19px;font-weight:500;letter-spacing:.01em}
+.addr{
+  flex:none;display:flex;align-items:center;gap:8px;font-size:13px;
+  background:transparent;border:1px solid var(--divider);border-radius:var(--radius-md);
+  padding:7px 11px;color:var(--text);
+}
+.addr:hover{border-color:var(--accent);background:rgba(145,132,217,.08)}
+.addr .pre{color:var(--muted)}
+.addr .pin{color:var(--accent)}
+.addr .caret{color:rgba(233,233,237,.5)}
+.search{
+  flex:1 1 200px;min-width:0;max-width:440px;height:38px;display:flex;align-items:center;gap:9px;
+  background:rgba(233,233,237,.05);border:1px solid var(--divider);
+  border-radius:var(--radius-md);padding:0 12px;color:rgba(233,233,237,.5);
+}
+.search:focus-within{border-color:var(--accent)}
+.search input{flex:1;min-width:0;background:none;border:none;outline:none;font-size:13.5px;color:var(--text)}
+.search input::placeholder{color:var(--muted)}
+.nav-actions{display:flex;flex-wrap:wrap;align-items:center;gap:6px;flex:none}
+.ghost{
+  display:flex;align-items:center;gap:7px;font-size:13px;background:transparent;
+  border:1px solid transparent;border-radius:var(--radius-md);padding:7px 10px;
+  color:rgba(233,233,237,.72);
+}
+.ghost:hover{border-color:var(--divider);color:var(--text)}
+.ghost .count{color:rgba(233,233,237,.4)}
+.cart{display:flex;align-items:center;gap:8px;padding:7px 12px;font-size:13px}
+.cart .pill{
+  min-width:18px;height:18px;border-radius:99px;background:var(--accent);color:#161826;
+  font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;padding:0 5px;
+}
+.avatar{
+  margin-left:6px;width:34px;height:34px;flex:none;border-radius:99px;
+  border:1px solid var(--a700);background:rgba(145,132,217,.12);
+  color:var(--a200);font-size:12px;font-weight:600;
+}
+.avatar:hover{border-color:var(--accent)}
+
+.page{max-width:1360px;margin:0 auto;padding:26px 40px 64px;overflow-x:hidden}
+
+.tracker-web{
+  border:1px solid var(--a800);border-radius:var(--radius-md);
+  background:linear-gradient(100deg,rgba(145,132,217,.13),rgba(35,37,50,.45) 62%);
+  padding:14px 18px 16px;margin-bottom:30px;
+}
+.tracker-web .top{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}
+.tracker-web .figure{
+  font-size:26px;font-weight:500;line-height:1;color:var(--lime-txt);
+  text-shadow:0 0 22px rgba(182,242,28,.4);
+}
+.tracker-web .mid{flex:1;min-width:0}
+.tracker-web .stage{font-size:13.5px}
+.tracker-web .stage .name{color:var(--lime-txt)}
+.tracker-web .stage .rest{color:rgba(233,233,237,.45)}
+.tracker-web .sub{font-size:12px;color:var(--faint);margin-top:3px}
+.tracker-web .track-grid{gap:10px;margin-top:16px}
+.tracker-web .step{display:flex;flex-direction:column;gap:8px;min-width:0}
+.tracker-web .line{display:flex;align-items:center;gap:6px;min-width:0}
+.tracker-web .track-label{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tracker-web .track-time{font-size:11px;flex:none;margin-left:auto}
+
+.h1{font-size:34px;font-weight:500;letter-spacing:-.02em;line-height:1.15;margin:0}
+.lede{margin:8px 0 0;font-size:14px;color:var(--muted)}
+.titleblock{margin-bottom:18px}
+
+.shell{display:grid;grid-template-columns:222px minmax(0,1fr);gap:40px;align-items:start}
+
+.rail{position:sticky;top:90px;display:flex;flex-direction:column;gap:26px}
+.rail-label{
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:10px;
+}
+.rail-list{display:flex;flex-direction:column;gap:1px}
+.cat{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  font-size:13.5px;text-align:left;background:transparent;border:none;
+  border-left:2px solid transparent;border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  padding:8px 10px;color:rgba(233,233,237,.66);
+}
+.cat:hover{background:rgba(233,233,237,.05)}
+.cat .n{font-size:11.5px;color:var(--fainter)}
+.cat[aria-pressed="true"]{background:rgba(145,132,217,.12);border-left-color:var(--accent);color:var(--a200)}
+.hairline{height:1px;background:linear-gradient(to right,transparent,var(--divider) 12%,var(--divider) 88%,transparent)}
+.bolt-toggle{
+  width:100%;display:flex;align-items:center;gap:9px;font-size:13px;
+  background:transparent;border:1px solid var(--divider);border-radius:var(--radius-md);
+  padding:9px 11px;color:rgba(233,233,237,.7);
+}
+.bolt-toggle .lbl{flex:1;text-align:left}
+.bolt-toggle .state{font-size:11px;color:rgba(233,233,237,.4)}
+.bolt-toggle[aria-pressed="true"]{
+  background:rgba(182,242,28,.1);border-color:rgba(182,242,28,.5);
+  color:var(--lime-txt);box-shadow:0 0 18px rgba(182,242,28,.18);
+}
+.rail-help{margin:8px 2px 0;font-size:11.5px;line-height:1.45;color:rgba(233,233,237,.4)}
+.prices{display:flex;gap:6px}
+.price-btn{
+  flex:1;font-size:13px;letter-spacing:.06em;background:transparent;
+  border:1px solid var(--divider);border-radius:var(--radius-sm);padding:7px 0;color:var(--muted);
+}
+.price-btn[aria-pressed="true"]{background:rgba(145,132,217,.14);border-color:var(--accent);color:var(--a200)}
+.rating-btn{
+  display:flex;align-items:center;gap:8px;font-size:13px;text-align:left;
+  background:none;border:none;padding:6px 2px;color:var(--muted);
+}
+.rating-btn:hover{color:var(--text)}
+.rating-btn .dot{
+  width:13px;height:13px;flex:none;border-radius:99px;border:1px solid var(--n700);
+  display:flex;align-items:center;justify-content:center;
+}
+.rating-btn .dot i{width:6px;height:6px;border-radius:99px;background:transparent;display:block}
+.rating-btn[aria-checked="true"]{color:var(--text)}
+.rating-btn[aria-checked="true"] .dot{border-color:var(--accent)}
+.rating-btn[aria-checked="true"] .dot i{background:var(--accent)}
+
+.lane{margin-bottom:38px}
+.lane-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin-bottom:14px}
+.lane-head .bolt-icon{color:var(--lime);filter:drop-shadow(0 0 8px rgba(182,242,28,.45))}
+.lane-head h2{font-size:13px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin:0}
+.lane-head .note{font-size:12.5px;color:var(--faint)}
+.lane-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+.lane-card{
+  display:flex;gap:14px;padding:14px;border-radius:var(--radius-lg);
+  border:1px solid rgba(182,242,28,.3);
+  background:linear-gradient(150deg,rgba(182,242,28,.09),rgba(30,32,43,.85) 68%);
+}
+.lane-card .pic{width:96px;height:96px;flex:0 1 96px;min-width:64px;border-radius:var(--radius-md);background:repeating-linear-gradient(135deg,#262939,#262939 7px,#1e2029 7px,#1e2029 14px)}
+.lane-card .pic::after{bottom:6px;left:7px}
+.lane-card .body{flex:1;min-width:0;display:flex;flex-direction:column}
+.lane-card .mins{display:flex;align-items:baseline;gap:5px}
+.lane-card .mins b{font-size:32px;font-weight:500;line-height:1;color:var(--lime-txt);text-shadow:0 0 20px rgba(182,242,28,.4)}
+.lane-card .mins span{font-size:11.5px;color:rgba(233,233,237,.5)}
+.lane-card .name{font-size:15px;font-weight:500;margin-top:10px;line-height:1.25}
+.lane-card .meta{font-size:12px;color:var(--faint);margin-top:4px}
+
+.resultbar{
+  display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px 24px;
+  padding-bottom:12px;border-bottom:1px solid var(--divider);margin-bottom:20px;
+}
+.resultbar h2{font-size:13px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin:0}
+.resultbar .right{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.clear{font-size:12.5px;background:none;border:none;padding:0;color:rgba(233,233,237,.5)}
+.clear:hover{color:var(--text)}
+.sorts{display:flex;flex-wrap:wrap;align-items:center;gap:2px;border:1px solid var(--divider);border-radius:var(--radius-md);padding:2px}
+.sort-btn{font-size:12.5px;padding:5px 11px;border:none;border-radius:var(--radius-sm);background:transparent;color:var(--muted)}
+.sort-btn[aria-pressed="true"]{background:rgba(145,132,217,.14);color:var(--a200)}
+.sort-btn[aria-pressed="true"][data-fast="1"]{background:rgba(182,242,28,.1);color:var(--lime-txt)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:18px}
+.card{
+  display:flex;flex-direction:column;border-radius:var(--radius-lg);
+  background:linear-gradient(160deg,rgba(35,37,50,.85),rgba(28,30,40,.6));
+  border:1px solid var(--n800);overflow:hidden;
+}
+.card:hover{border-color:var(--a700)}
+.card .media{
+  position:relative;height:132px;border:none;border-bottom:1px solid var(--n800);
+  background:repeating-linear-gradient(125deg,#262939,#262939 8px,#1e2029 8px,#1e2029 16px);
+}
+.card .media::after{bottom:8px;left:10px;font-size:8.5px;letter-spacing:.09em}
+.card .save{
+  position:absolute;top:9px;right:9px;width:30px;height:30px;border-radius:99px;
+  border:1px solid var(--divider);background:rgba(22,24,38,.7);backdrop-filter:blur(6px);
+  color:var(--muted);display:flex;align-items:center;justify-content:center;padding:0;
+}
+.card .save:hover{border-color:var(--accent)}
+.card .save[aria-pressed="true"]{color:var(--accent)}
+.lane-badge{
+  position:absolute;top:10px;left:10px;display:flex;align-items:center;gap:5px;
+  font-size:10px;letter-spacing:.08em;padding:4px 8px;border-radius:99px;
+  background:rgba(22,24,38,.72);backdrop-filter:blur(6px);
+  border:1px solid rgba(182,242,28,.45);color:var(--lime-txt);
+}
+.card .body{padding:14px 15px 15px;display:flex;flex-direction:column;gap:7px;flex:1}
+.card .title{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.card .title .name{font-size:16px;font-weight:500;line-height:1.25;min-width:0}
+.card .title .eta{font-size:19px;flex:none}
+.card .meta{font-size:12.5px;color:rgba(233,233,237,.45)}
+.card .badges{display:flex;flex-wrap:wrap;align-items:center;gap:6px 7px;margin-top:auto;padding-top:9px}
+
+.empty{padding:56px 0;text-align:center}
+.empty .h{font-size:17px;font-weight:500}
+.empty p{margin:7px 0 16px;font-size:13.5px;color:rgba(233,233,237,.5)}
+.empty .btn-outline{padding:8px 16px}
+
+/* ===========================================================================
+   MOBILE — home / discovery. 402px reference.
+=========================================================================== */
+.mob{display:none;min-height:100vh;flex-direction:column;background:radial-gradient(120% 55% at 50% 0%,#20233a 0%,var(--bg) 56%)}
+
+.m-head{padding:56px 18px 12px;display:flex;align-items:center;gap:12px}
+.m-icon-btn{
+  width:40px;height:40px;flex:none;border-radius:12px;display:flex;align-items:center;
+  justify-content:center;padding:0;
+}
+.m-profile{
+  border:1px solid var(--a700);background:rgba(145,132,217,.12);
+  box-shadow:0 0 18px rgba(145,132,217,.22);color:var(--a200);
+}
+.m-profile:hover,.m-searchbtn:hover{border-color:var(--accent)}
+.m-searchbtn{border:1px solid var(--divider);background:rgba(233,233,237,.05);color:var(--text)}
+.m-brand{flex:1;min-width:0}
+.m-brand .row{display:flex;align-items:center;gap:6px}
+.m-brand .name{font-size:15px;font-weight:600;letter-spacing:.02em}
+.m-brand .bar{width:1px;height:11px;background:rgba(233,233,237,.2);flex:none}
+.m-brand .addr{font-size:13px;color:rgba(233,233,237,.6);background:none;border:none;padding:0;min-width:0}
+.m-brand .avg{font-size:11.5px;color:var(--lime-txt);margin-top:4px}
+
+.m-tracker{
+  margin:2px 18px 14px;border-radius:var(--radius-md);border:1px solid rgba(182,242,28,.3);
+  background:linear-gradient(100deg,rgba(182,242,28,.1),rgba(35,37,50,.5) 70%);padding:11px 12px 12px;
+}
+.m-tracker .top{display:flex;align-items:center;gap:10px}
+.m-tracker .mid{flex:1;min-width:0}
+.m-tracker .stage{font-size:12.5px}
+.m-tracker .stage .name{color:var(--lime-txt)}
+.m-tracker .stage .rest{color:rgba(233,233,237,.45)}
+.m-tracker .sub{font-size:11px;color:var(--faint);margin-top:2px}
+.m-tracker .figure{
+  font-size:20px;font-weight:500;color:var(--lime-txt);flex:none;
+  text-shadow:0 0 16px rgba(182,242,28,.4);
+}
+.m-tracker .track-grid{gap:6px;margin-top:11px}
+.m-tracker .step{display:flex;flex-direction:column;gap:6px;align-items:center;min-width:0}
+.m-tracker .track-bar{width:100%}
+.m-tracker .ends{display:flex;justify-content:space-between;gap:10px;margin-top:7px;font-size:10.5px;color:rgba(233,233,237,.4)}
+
+.m-lane-head{padding:0 18px 8px;display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.m-lane-head .l{display:flex;align-items:center;gap:7px}
+.m-lane-head .l svg{color:var(--lime)}
+.m-lane-head h2{font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin:0}
+.m-lane-head .note{font-size:11.5px;color:rgba(233,233,237,.45);flex:none}
+.m-lane{display:flex;gap:10px;overflow-x:auto;padding:0 18px 16px}
+.m-lane-card{
+  flex:none;width:150px;border-radius:var(--radius-lg);border:1px solid rgba(182,242,28,.28);
+  background:linear-gradient(160deg,rgba(182,242,28,.09),rgba(30,32,43,.88));
+  padding:11px;display:flex;flex-direction:column;gap:9px;
+}
+.m-lane-card .pic{height:56px;border-radius:var(--radius-md)}
+.m-lane-card .pic::after{bottom:4px;left:6px}
+.m-lane-card .mins{display:flex;align-items:baseline;gap:5px}
+.m-lane-card .mins b{font-size:26px;font-weight:500;line-height:1;color:var(--lime-txt);text-shadow:0 0 18px rgba(182,242,28,.4)}
+.m-lane-card .mins span{font-size:11px;color:rgba(233,233,237,.5)}
+.m-lane-card .name{font-size:13.5px;font-weight:500;line-height:1.3}
+.m-lane-card .meta{font-size:11.5px;color:var(--faint);margin-top:3px}
+
+.m-chips{display:flex;gap:8px;overflow-x:auto;padding:0 18px 12px}
+.m-chip{
+  flex:none;font-size:13px;font-weight:500;padding:8px 14px;border-radius:10px;
+  border:1px solid var(--divider);background:rgba(233,233,237,.04);color:rgba(233,233,237,.62);
+}
+.m-chip[aria-pressed="true"]{
+  background:rgba(145,132,217,.16);border-color:var(--accent);color:var(--a200);
+  box-shadow:0 0 18px rgba(145,132,217,.28);
+}
+.m-filters{padding:0 18px 12px;display:flex;align-items:center;gap:8px}
+.m-bolt{
+  display:flex;align-items:center;gap:5px;font-size:11.5px;padding:6px 11px;border-radius:99px;
+  border:1px solid var(--divider);background:transparent;color:var(--muted);
+}
+.m-bolt[aria-pressed="true"]{background:rgba(182,242,28,.11);border-color:rgba(182,242,28,.5);color:var(--lime-txt)}
+.m-sort{
+  display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--accent);
+  background:none;border:none;padding:0;margin-left:auto;
+}
+.m-count{padding:0 18px 8px;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:rgba(233,233,237,.4)}
+.m-list{flex:1;padding:0 18px 18px;display:flex;flex-direction:column;gap:10px}
+.m-row{
+  display:flex;gap:12px;padding:11px;border-radius:var(--radius-lg);
+  background:linear-gradient(150deg,rgba(35,37,50,.9),rgba(28,30,40,.7));box-shadow:var(--shadow-sm);
+}
+.m-row .pic{width:76px;height:76px;flex:none;border-radius:10px}
+.m-row .pic::after{bottom:5px;left:6px}
+.m-row .body{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+.m-row .title{display:flex;align-items:flex-start;gap:8px}
+.m-row .title .name{flex:1;font-size:15.5px;font-weight:500;line-height:1.25}
+.m-row .save{background:none;border:none;padding:0;flex:none;color:rgba(233,233,237,.38);line-height:0}
+.m-row .save[aria-pressed="true"]{color:var(--accent)}
+.m-row .eta{font-size:22px}
+.m-row .meta{font-size:12px;color:rgba(233,233,237,.45)}
+.m-row .badges{display:flex;flex-wrap:wrap;align-items:center;gap:6px 7px;margin-top:1px}
+.m-row .badge{padding:3px 7px;letter-spacing:.05em}
+.m-row .tag{padding:3px 7px}
+.m-empty{padding:40px 18px;text-align:center}
+.m-empty .h{font-size:16px;font-weight:500}
+.m-empty p{margin:7px 0 16px;font-size:13px;color:rgba(233,233,237,.5)}
+
+.tabbar{
+  position:sticky;bottom:0;margin:0 14px 26px;border-radius:20px;border:1px solid var(--divider);
+  background:rgba(35,37,50,.82);backdrop-filter:blur(16px);box-shadow:0 10px 30px rgba(0,0,0,.5);
+  padding:9px 8px;display:flex;gap:2px;
+}
+.tab{
+  flex:1;background:none;border:none;padding:4px 0;display:flex;flex-direction:column;
+  align-items:center;gap:3px;color:rgba(233,233,237,.45);min-height:44px;justify-content:center;
+}
+.tab[aria-current="page"]{color:var(--accent)}
+.tab .name{font-size:9.5px;font-weight:500}
+
+/* Hit targets to the 44px floor without moving anything: the control keeps its
+   drawn size, an invisible overlay carries the touch area. */
+.m-icon-btn,.m-chip,.m-bolt,.m-sort,.m-brand .addr,.m-row .save{position:relative}
+.m-icon-btn::after,.m-chip::after,.m-bolt::after,.m-sort::after,.m-brand .addr::after{
+  content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:44px;
+}
+.m-row .save::after{
+  content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;
+}
+
+/* --- the responsive middle, which the mock does not cover ------------------ */
+@media (max-width:1180px){
+  .nav-in{padding:12px 28px}
+  .page{padding:26px 28px 64px}
+  .shell{grid-template-columns:200px minmax(0,1fr);gap:28px}
+}
+@media (max-width:1023px){
+  .web{display:none}
+  .mob{display:flex}
+  body{background:var(--bg)}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-
-  <header>
-    <div>
-      <div class="brand">Kettle &amp; <span>Crumb</span></div>
-      <div class="tag">Demo storefront — no real food, no real money.</div>
-    </div>
-    <button id="reset">Clear demo data</button>
-  </header>
-
-  <section>
-    <h2>Menu</h2>
-    <div id="menu"></div>
-  </section>
-
-  <section>
-    <h2>Your order</h2>
-    <div class="panel" id="cart"></div>
-  </section>
-
-  <section>
-    <h2>Tracking</h2>
-    <div class="orders" id="orders"></div>
-  </section>
-
-  <footer>Prototype build · prices and delivery times are simulated</footer>
-</div>
-
+<div id="app"></div>
 <script>
-// Category order here is the order they appear on the page.
-const CATEGORIES = [
-  { id: 'pasta', name: 'Pasta' },
-  { id: 'pizza', name: 'Pizza' },
-  { id: 'desi',  name: 'Desi'  },
-  { id: 'thai',  name: 'Thai'  },
+/* ---------------------------------------------------------------------------
+   Bolt — home / discovery.
+   Fixtures. In a real build these come from the API for the delivery address;
+   the shapes below are the documented ones. `mins` is a display string parsed
+   for sorting — prefer etaMin/etaMax integers from a real API.
+--------------------------------------------------------------------------- */
+const CATS = ['All', 'Biryani', 'Pasta', 'Pizza', 'Fast Food', 'Desi', 'Pan Asian', 'Desserts'];
+const SORTS = ['Fastest', 'Recommended', 'Top rated', 'Cheapest'];
+
+const RESTAURANTS = [
+  { id: 'kol', name: 'Kolachi Biryani House', cat: 'Biryani',   cuisine: 'Sindhi biryani, BBQ',    rating: 4.8, reviews: '3.4k', mins: '20–30', price: 1, dist: '1.4 km', tag: 'Free delivery' },
+  { id: 'crt', name: 'Burger Cartel',         cat: 'Fast Food', cuisine: 'Burgers, loaded fries',  rating: 4.2, reviews: '5.6k', mins: '15–25', price: 1, dist: '0.9 km', tag: 'Buy 1 get 1' },
+  { id: 'bnd', name: 'Bundu Grill & Karahi',  cat: 'Desi',      cuisine: 'Desi, charcoal grill',   rating: 4.6, reviews: '1.2k', mins: '25–35', price: 2, dist: '2.1 km', tag: '' },
+  { id: 'ost', name: 'Osteria Verde',         cat: 'Pasta',     cuisine: 'Hand-rolled pasta',      rating: 4.4, reviews: '610',  mins: '35–45', price: 3, dist: '4.6 km', tag: '' },
+  { id: 'dgh', name: 'Lahore Dough Co.',      cat: 'Pizza',     cuisine: 'Sourdough pizza',        rating: 4.5, reviews: '2.1k', mins: '30–40', price: 2, dist: '3.2 km', tag: '' },
+  { id: 'wok', name: 'Wok Republic',          cat: 'Pan Asian', cuisine: 'Thai, Chinese, ramen',   rating: 4.3, reviews: '890',  mins: '30–45', price: 2, dist: '3.8 km', tag: '' },
+  { id: 'sug', name: 'Sugar & Saffron',       cat: 'Desserts',  cuisine: 'Kulfi, cakes, brownies', rating: 4.7, reviews: '1.4k', mins: '25–35', price: 2, dist: '2.7 km', tag: 'New' },
+  { id: 'deg', name: 'Degh & Dum',            cat: 'Biryani',   cuisine: 'Pulao, nihari, naan',    rating: 4.5, reviews: '2.6k', mins: '20–30', price: 1, dist: '1.8 km', tag: '' },
+  { id: 'zam', name: 'Zamzama Shawarma',      cat: 'Fast Food', cuisine: 'Shawarma, wraps',        rating: 4.1, reviews: '4.2k', mins: '15–20', price: 1, dist: '0.6 km', tag: 'Fastest near you' },
+  { id: 'noo', name: 'Noodle Theory',         cat: 'Pan Asian', cuisine: 'Ramen, bao, gyoza',      rating: 4.6, reviews: '1.1k', mins: '25–35', price: 3, dist: '3.1 km', tag: '' },
+  { id: 'for', name: 'Forno Nero',            cat: 'Pizza',     cuisine: 'Neapolitan, wood-fired', rating: 4.7, reviews: '780',  mins: '35–50', price: 3, dist: '5.2 km', tag: '' },
+  { id: 'tia', name: 'Tiramisu Club',         cat: 'Desserts',  cuisine: 'Gelato, tiramisu',       rating: 4.4, reviews: '520',  mins: '20–30', price: 2, dist: '2.2 km', tag: '' },
 ];
 
-const MENU = [
-  { id: 'p1', cat: 'pasta', emoji: '🍝', name: 'Carbonara',        desc: 'Guanciale, pecorino, black pepper', price: 11.50 },
-  { id: 'p2', cat: 'pasta', emoji: '🍝', name: 'Penne Arrabbiata', desc: 'Chilli, garlic, San Marzano',       price: 9.75  },
-  { id: 'p3', cat: 'pasta', emoji: '🍄', name: 'Truffle Fettuccine', desc: 'Wild mushroom, cream, parmesan',  price: 13.00 },
+const ADDRESS = '12-C Gulberg III';
 
-  { id: 'z1', cat: 'pizza', emoji: '🍕', name: 'Margherita',       desc: 'San Marzano, fior di latte, basil', price: 10.00 },
-  { id: 'z2', cat: 'pizza', emoji: '🌶️', name: 'Diavola',          desc: 'Spicy salami, chilli oil',          price: 12.00 },
-  { id: 'z3', cat: 'pizza', emoji: '🧀', name: 'Quattro Formaggi', desc: 'Mozzarella, gorgonzola, taleggio',  price: 12.50 },
+/* The active order. Static stage index, as in the mock — wire `stage`, the
+   per-stage timestamps, `etaMins` and `kitchen` to real order state. */
+const ORDER = {
+  kitchen: 'Burger Cartel',
+  items: 2,
+  etaMins: 4,
+  stage: 2,
+  sub: 'Two streets away · handing off at ' + ADDRESS,
+  subWeb: 'Rider is two streets away — 4 minutes out',
+  steps: [
+    { label: 'Preparing order',   time: '7:41' },
+    { label: 'Order picked up',   time: '7:52' },
+    { label: 'Around the corner', time: 'now' },
+    { label: 'Delivered',         time: '~8:04' },
+  ],
+};
 
-  { id: 'd1', cat: 'desi',  emoji: '🍛', name: 'Chicken Karahi',   desc: 'Wok-fried, tomato, ginger',         price: 12.75 },
-  { id: 'd2', cat: 'desi',  emoji: '🍚', name: 'Chicken Biryani',  desc: 'Long grain, saffron, raita',        price: 10.50 },
-  { id: 'd3', cat: 'desi',  emoji: '🥘', name: 'Beef Nihari',      desc: 'Slow cooked overnight, naan',       price: 13.25 },
+/* Phosphor (regular outline; Star and the saved Heart use fill). */
+const ICON = {
+  user: 'M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z',
+  search: 'M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z',
+  heart: 'M178,40c-20.65,0-38.73,8.88-50,23.89C116.73,48.88,98.65,40,78,40a62.07,62.07,0,0,0-62,62c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,228.66,240,172,240,102A62.07,62.07,0,0,0,178,40ZM128,214.8C109.74,204.16,32,155.69,32,102A46.06,46.06,0,0,1,78,56c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,155.61,146.24,204.15,128,214.8Z',
+  heartFill: 'M240,102c0,70-103.79,126.66-108.21,129a8,8,0,0,1-7.58,0C119.79,228.66,16,172,16,102A62.07,62.07,0,0,1,78,40c20.65,0,38.73,8.88,50,23.89C139.27,48.88,157.35,40,178,40A62.07,62.07,0,0,1,240,102Z',
+  starFill: 'M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z',
+  lightning: 'M215.79,118.17,146.6,199.09a8,8,0,0,1-13.79-7L145.35,136H88a8,8,0,0,1-6.09-13.17l69.19-80.92a8,8,0,0,1,13.79,7L152.65,104H210A8,8,0,0,1,215.79,118.17Z',
+  faders: 'M40,88H73a32,32,0,0,0,62,0h81a8,8,0,0,0,0-16H135a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16Zm64-24A16,16,0,1,1,88,80,16,16,0,0,1,104,64ZM216,168H199a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16h97a32,32,0,0,0,62,0h17a8,8,0,0,0,0-16Zm-48,24a16,16,0,1,1,16-16A16,16,0,0,1,168,192Z',
+  bag: 'M216,64H176a48,48,0,0,0-96,0H40A16,16,0,0,0,24,80V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V80A16,16,0,0,0,216,64ZM128,32a32,32,0,0,1,32,32H96A32,32,0,0,1,128,32Zm88,168H40V80H216V200Z',
+  caretDown: 'M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z',
+  mapPin: 'M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z',
+  house: 'M218.83,103.77l-80-75.48a1.14,1.14,0,0,1-.11-.11,16,16,0,0,0-21.53,0l-.11.11L37.17,103.77A16,16,0,0,0,32,115.55V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V160h32v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V115.55A16,16,0,0,0,218.83,103.77ZM208,208H160V160a16,16,0,0,0-16-16H112a16,16,0,0,0-16,16v48H48V115.55l.11-.1L128,40l79.9,75.43.11.1Z',
+  check: 'M104,192a8.5,8.5,0,0,1-6-2.5L34.5,126a8.5,8.5,0,0,1,12-12L104,171.5,209.5,66a8.5,8.5,0,0,1,12,12l-111.5,111.5A8.5,8.5,0,0,1,104,192Z',
+  dot: 'M128,72a56,56,0,1,0,56,56A56.06,56.06,0,0,0,128,72Z',
+  ring: 'M128,32a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,32Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,208Z',
+};
 
-  { id: 't1', cat: 'thai',  emoji: '🍜', name: 'Pad Thai',         desc: 'Rice noodle, tamarind, peanut',     price: 11.00 },
-  { id: 't2', cat: 'thai',  emoji: '🍲', name: 'Green Curry',      desc: 'Coconut, thai basil, jasmine rice', price: 11.75 },
-  { id: 't3', cat: 'thai',  emoji: '🦐', name: 'Tom Yum Goong',    desc: 'Prawn, lemongrass, lime',           price: 12.25 },
-];
+const icon = (name, size, cls) =>
+  '<svg width="' + size + '" height="' + size + '" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"' +
+  (cls ? ' class="' + cls + '"' : '') + ' style="flex:none"><path d="' + ICON[name] + '"></path></svg>';
 
-const STAGES = [
-  { label: 'Confirmed',   at: 0  },
-  { label: 'Preparing',   at: 8  },
-  { label: 'On the way',  at: 20 },
-  { label: 'Delivered',   at: 36 },
-];
-const DELIVERED_AT = STAGES[STAGES.length - 1].at;
-const DELIVERY_FEE = 2.50;
-const KEY = 'kc-demo-v1';
+/* The mark. Halo strokes in the surface colour are what separate the shapes,
+   so the paint order matters: halo, then fill. */
+/* Stroke weights are authored per size, not scaled from one another — the 22px
+   mark carries proportionally heavier strokes so it holds up small. */
+const LOGO_STROKES = {
+  28: { rect: 4, draft: 4.6, wheel: 5, halo: 9 },
+  22: { rect: 5, draft: 5.2, wheel: 6, halo: 10 },
+};
 
-const money = n => '$' + n.toFixed(2);
-const byId = id => MENU.find(m => m.id === id);
-const el = document.getElementById.bind(document);
+const logo = size => {
+  const s = LOGO_STROKES[size];
+  return '' +
+  '<svg width="' + size + '" height="' + size + '" viewBox="0 0 120 120" fill="none" style="flex:none" role="img" aria-label="Bolt">' +
+    '<rect x="4" y="4" width="112" height="112" rx="30" fill="#1b1d2c" stroke="#9184d9" stroke-width="' + s.rect + '"></rect>' +
+    '<g transform="skewX(-8) translate(8 6)">' +
+      '<g stroke="#b6f21c" stroke-width="' + s.draft + '" stroke-linecap="round" opacity=".9">' +
+        '<path d="M14 44h20"></path><path d="M10 56h20"></path><path d="M16 68h10"></path>' +
+      '</g>' +
+      '<g stroke="#9184d9" stroke-width="' + s.wheel + '">' +
+        '<circle cx="42" cy="78" r="11.5"></circle><circle cx="74" cy="78" r="11.5"></circle>' +
+      '</g>' +
+      '<path d="M68 34L41 66h14l-7 25 30-38H60l8-19z" fill="#1b1d2c" stroke="#1b1d2c" stroke-width="' + s.halo + '" stroke-linejoin="round"></path>' +
+      '<path d="M68 34L41 66h14l-7 25 30-38H60l8-19z" fill="#b6f21c"></path>' +
+      '<circle cx="68" cy="24" r="12.5" fill="#1b1d2c" stroke="#1b1d2c" stroke-width="' + s.halo + '"></circle>' +
+      '<circle cx="68" cy="24" r="12.5" fill="#9184d9"></circle>' +
+      '<path d="M78.6 17.4A12.5 12.5 0 0 1 74.6 34.6L71.2 29.2A6.1 6.1 0 0 0 73.2 20.8Z" fill="#1b1d2c" stroke="#1b1d2c" stroke-width="1.1" stroke-linejoin="round"></path>' +
+    '</g>' +
+  '</svg>';
+};
 
-let cart = {};            // { itemId: qty }
-let orders = load();      // newest first
+/* --- state ---------------------------------------------------------------- */
+const state = {
+  cat: 'All',
+  sort: 0,                              // index into SORTS; Fastest by default
+  query: '',
+  boltOnly: false,
+  prices: {},                           // { 1|2|3: true }
+  minRating: 0,                         // 0 | 4 | 4.5
+  favs: { kol: true, zam: true },
+};
 
-function load() {
-  try { return JSON.parse(localStorage.getItem(KEY)) || []; }
-  catch { return []; }
-}
-function save() {
-  localStorage.setItem(KEY, JSON.stringify(orders));
-}
+/* --- derived -------------------------------------------------------------- */
+const etaLo = r => parseInt(r.mins, 10);
+const etaHi = r => parseInt(r.mins.split(/[–-]/)[1], 10);
+const inBoltLane = r => etaHi(r) <= 25;
 
-/* ---------- menu ---------- */
+const anyPrice = () => Object.values(state.prices).some(Boolean);
+const hasFilters = () =>
+  state.cat !== 'All' || state.boltOnly || anyPrice() || state.minRating > 0 || !!state.query.trim();
 
-const itemCard = m => `
-  <div class="item">
-    <div class="thumb" aria-hidden="true">${m.emoji}</div>
-    <div class="name">${m.name}</div>
-    <div class="desc">${m.desc}</div>
-    <div class="row">
-      <span class="price">${money(m.price)}</span>
-      <button data-add="${m.id}">Add</button>
-    </div>
-  </div>
-`;
-
-// A category with no items is skipped rather than rendered empty.
-el('menu').innerHTML = CATEGORIES.map(c => {
-  const items = MENU.filter(m => m.cat === c.id);
-  if (!items.length) return '';
-  return `
-    <div class="cat">
-      <h3 class="cat-name">${c.name} <span class="cat-count">${items.length}</span></h3>
-      <div class="grid">${items.map(itemCard).join('')}</div>
-    </div>
-  `;
-}).join('');
-
-/* ---------- cart ---------- */
-
-function cartLines() {
-  return Object.entries(cart).map(([id, qty]) => ({ item: byId(id), qty }));
-}
-function cartSubtotal() {
-  return cartLines().reduce((s, l) => s + l.item.price * l.qty, 0);
-}
-
-function renderCart() {
-  const lines = cartLines();
-  const box = el('cart');
-
-  if (!lines.length) {
-    box.innerHTML = '<div class="empty">Nothing added yet. Pick something from the menu.</div>';
-    return;
-  }
-
-  const subtotal = cartSubtotal();
-  box.innerHTML = lines.map(l => `
-    <div class="line">
-      <span class="grow">${l.item.emoji} ${l.item.name}</span>
-      <button class="qty" data-dec="${l.item.id}" aria-label="Remove one ${l.item.name}">−</button>
-      <span class="count">${l.qty}</span>
-      <button class="qty" data-add="${l.item.id}" aria-label="Add one ${l.item.name}">+</button>
-      <span class="price">${money(l.item.price * l.qty)}</span>
-    </div>
-  `).join('') + `
-    <div class="line"><span class="grow eta">Delivery</span><span class="price">${money(DELIVERY_FEE)}</span></div>
-    <div class="line">
-      <span class="grow total">Total ${money(subtotal + DELIVERY_FEE)}</span>
-      <button class="primary" id="place">Place order</button>
-    </div>
-  `;
-}
-
-/* ---------- orders ---------- */
-
-function placeOrder() {
-  const lines = cartLines();
-  if (!lines.length) return;
-
-  orders.unshift({
-    id: 'KC-' + String(Math.floor(Math.random() * 9000) + 1000),
-    placedAt: Date.now(),
-    total: cartSubtotal() + DELIVERY_FEE,
-    lines: lines.map(l => ({ emoji: l.item.emoji, name: l.item.name, qty: l.qty })),
-  });
-
-  cart = {};
-  save();
-  renderCart();
-  renderOrders();
+/* Mobile carries only the category chips, the Bolt toggle and sort — it has no
+   search field, price control or rating control, so it must not be filtered by
+   them either. A query or price tier set on the desktop layout would otherwise
+   silently narrow the mobile list with nothing on screen to clear it. */
+function visible(scope) {
+  const wide = scope !== 'mobile';
+  const q = wide ? state.query.trim().toLowerCase() : '';
+  let out = RESTAURANTS.filter(r =>
+    (state.cat === 'All' || r.cat === state.cat) &&
+    (!state.boltOnly || inBoltLane(r)) &&
+    (!wide || !anyPrice() || state.prices[r.price]) &&
+    (!wide || r.rating >= state.minRating) &&
+    (!q || (r.name + ' ' + r.cuisine + ' ' + r.cat).toLowerCase().includes(q))
+  );
+  const by = SORTS[state.sort];
+  if (by === 'Fastest')   out = [...out].sort((a, b) => etaLo(a) - etaLo(b) || etaHi(a) - etaHi(b));
+  if (by === 'Top rated') out = [...out].sort((a, b) => b.rating - a.rating);
+  if (by === 'Cheapest')  out = [...out].sort((a, b) => a.price - b.price || etaLo(a) - etaLo(b));
+  return out;                            // Recommended is the authored order
 }
 
-function stageOf(order) {
-  const secs = (Date.now() - order.placedAt) / 1000;
-  let i = 0;
-  STAGES.forEach((s, n) => { if (secs >= s.at) i = n; });
-  return { index: i, secs };
+/* The lane is a browse device: always the three fastest of the whole set,
+   never of the filtered set. */
+const boltLane = () =>
+  [...RESTAURANTS].sort((a, b) => etaLo(a) - etaLo(b)).slice(0, 3);
+
+const savedCount = () => Object.values(state.favs).filter(Boolean).length;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const plural = n => n + (n === 1 ? ' kitchen' : ' kitchens');
+
+/* --- shared fragments ----------------------------------------------------- */
+function priceMarks(tier) {
+  return '<span class="price-on">' + '$'.repeat(tier) + '</span>' +
+         '<span class="price-off">' + '$'.repeat(3 - tier) + '</span>';
 }
 
-function renderOrders() {
-  const box = el('orders');
+/* Web uses the Phosphor Star (fill, purple); the mobile row uses a text star,
+   as both mocks do. */
+function badges(r, textStar) {
+  return '' +
+    '<span class="badge">' + (textStar ? '★' : icon('starFill', 11, 'star')) +
+      '<span class="num">' + r.rating.toFixed(1) + '</span> ' +
+      '<span class="reviews num">' + esc(r.reviews) + '</span></span>' +
+    '<span class="badge num" style="letter-spacing:.06em">' + priceMarks(r.price) + '</span>' +
+    (r.tag ? '<span class="tag">' + esc(r.tag) + '</span>' : '');
+}
 
-  if (!orders.length) {
-    box.innerHTML = '<div class="panel"><div class="empty">No orders yet. Placed orders show live tracking here.</div></div>';
-    return;
-  }
-
-  box.innerHTML = orders.map(o => {
-    const { index, secs } = stageOf(o);
-    const delivered = index === STAGES.length - 1;
-    const left = Math.max(0, Math.ceil(DELIVERED_AT - secs));
-
-    return `
-      <div class="panel">
-        <div>
-          <div class="order-head">
-            <div>
-              <span class="oid">${o.id}</span>
-              <span class="pill ${delivered ? '' : 'live'}">${STAGES[index].label}</span>
-            </div>
-            <span class="total">${money(o.total)}</span>
-          </div>
-          <div class="summary">${o.lines.map(l => `${l.emoji} ${l.name} ×${l.qty}`).join(' · ')}</div>
-
-          <div class="track">
-            ${STAGES.map((s, n) => `
-              <div class="step ${n < index ? 'done' : n === index ? 'now' : ''}">
-                <div class="bar"></div>
-                <div class="step-label">${s.label}</div>
-              </div>
-            `).join('')}
-          </div>
-
-          <div class="eta" style="margin-top:10px">
-            ${delivered ? 'Delivered — enjoy.' : `Arriving in about ${left}s`}
-          </div>
-        </div>
-      </div>
-    `;
+function trackerSteps(compact) {
+  return ORDER.steps.map((s, i) => {
+    const cls = i < ORDER.stage ? 'done' : i === ORDER.stage ? 'now' : 'next';
+    const glyph = cls === 'done' ? 'check' : cls === 'now' ? 'dot' : 'ring';
+    return '<div class="step">' +
+      '<div class="track-bar ' + cls + '"></div>' +
+      (compact
+        ? '<span class="track-glyph ' + cls + '">' + icon(glyph, 11) + '</span>'
+        : '<div class="line">' +
+            '<span class="track-glyph ' + cls + '">' + icon(glyph, 12) + '</span>' +
+            '<span class="track-label ' + cls + '">' + esc(s.label) + '</span>' +
+            '<span class="track-time num ' + cls + '">' + esc(s.time) + '</span>' +
+          '</div>') +
+      '</div>';
   }).join('');
 }
 
-/* ---------- events ---------- */
+/* --- web ------------------------------------------------------------------ */
+function webNav() {
+  return '' +
+  '<header class="nav"><div class="nav-in">' +
+    '<div class="brand">' + logo(28) + '<span class="brand-name">Bolt</span></div>' +
+    '<button class="addr" data-act="noop">' +
+      '<span class="pin">' + icon('mapPin', 15) + '</span>' +
+      '<span class="pre">Deliver to</span><span>' + esc(ADDRESS) + '</span>' +
+      '<span class="caret">' + icon('caretDown', 13) + '</span>' +
+    '</button>' +
+    '<label class="search">' + icon('search', 16) +
+      '<input id="q" type="search" value="' + esc(state.query) + '" placeholder="Search kitchens or dishes" aria-label="Search kitchens or dishes">' +
+    '</label>' +
+    '<div style="flex:1"></div>' +
+    '<div class="nav-actions">' +
+      '<button class="ghost" data-act="noop">' + icon('bag', 16) + 'Orders</button>' +
+      '<button class="ghost" data-act="noop">' + icon('heart', 16) + 'Saved <span class="count num">' + savedCount() + '</span></button>' +
+      '<button class="btn-outline cart" data-act="noop">Cart<span class="pill num">2</span></button>' +
+      '<button class="avatar" data-act="noop" aria-label="Profile">SA</button>' +
+    '</div>' +
+  '</div></header>';
+}
 
-document.addEventListener('click', e => {
-  const add = e.target.closest('[data-add]');
-  const dec = e.target.closest('[data-dec]');
+function webTracker() {
+  return '' +
+  '<section class="tracker-web" aria-label="Live order">' +
+    '<div class="top">' +
+      '<span class="figure num">' + ORDER.etaMins + '′</span>' +
+      '<div class="mid">' +
+        '<div class="stage"><span class="name">' + esc(ORDER.steps[ORDER.stage].label) + '</span>' +
+          '<span class="rest"> · ' + esc(ORDER.kitchen) + ' · ' + ORDER.items + ' items</span></div>' +
+        '<div class="sub">' + esc(ORDER.subWeb) + '</div>' +
+      '</div>' +
+      '<button class="btn-outline" data-act="noop">Track order</button>' +
+    '</div>' +
+    '<div class="track-grid">' + trackerSteps(false) + '</div>' +
+  '</section>';
+}
 
-  if (add) {
-    const id = add.dataset.add;
-    cart[id] = (cart[id] || 0) + 1;
-    renderCart();
-  } else if (dec) {
-    const id = dec.dataset.dec;
-    cart[id] -= 1;
-    if (cart[id] < 1) delete cart[id];
-    renderCart();
-  } else if (e.target.id === 'place') {
-    placeOrder();
-  } else if (e.target.id === 'reset') {
-    orders = [];
-    cart = {};
-    save();
-    renderCart();
-    renderOrders();
+function webRail() {
+  const counts = name => name === 'All' ? RESTAURANTS.length : RESTAURANTS.filter(r => r.cat === name).length;
+  const cats = CATS.map(name =>
+    '<button class="cat" data-act="cat" data-val="' + esc(name) + '" aria-pressed="' + (state.cat === name) + '">' +
+      esc(name) + '<span class="n num">' + counts(name) + '</span></button>').join('');
+
+  const prices = [1, 2, 3].map(n =>
+    '<button class="price-btn" data-act="price" data-val="' + n + '" aria-pressed="' + !!state.prices[n] + '">' +
+      '$'.repeat(n) + '</button>').join('');
+
+  const ratings = [{ v: 0, label: 'Any rating' }, { v: 4, label: '4.0 and up' }, { v: 4.5, label: '4.5 and up' }]
+    .map(g =>
+      '<button class="rating-btn" role="radio" data-act="rating" data-val="' + g.v + '" aria-checked="' + (state.minRating === g.v) + '">' +
+        '<span class="dot"><i></i></span>' + g.label + '</button>').join('');
+
+  return '' +
+  '<aside class="rail">' +
+    '<div><div class="rail-label">Categories</div><div class="rail-list">' + cats + '</div></div>' +
+    '<div class="hairline"></div>' +
+    '<div>' +
+      '<div class="rail-label">Speed</div>' +
+      '<button class="bolt-toggle" data-act="bolt" aria-pressed="' + state.boltOnly + '">' +
+        icon('lightning', 14) + '<span class="lbl">Bolt lane only</span>' +
+        '<span class="state">' + (state.boltOnly ? 'On' : 'Off') + '</span></button>' +
+      '<p class="rail-help">Kitchens that consistently hand off in under 25 minutes.</p>' +
+    '</div>' +
+    '<div><div class="rail-label">Price</div><div class="prices">' + prices + '</div></div>' +
+    '<div><div class="rail-label">Rating</div><div class="rail-list" role="radiogroup" aria-label="Minimum rating">' + ratings + '</div></div>' +
+  '</aside>';
+}
+
+function webLane() {
+  const cards = boltLane().map(r =>
+    '<div class="lane-card">' +
+      '<div class="pic photo"></div>' +
+      '<div class="body">' +
+        '<div class="mins"><b class="num">' + etaLo(r) + '</b><span>min</span></div>' +
+        '<div class="name ell">' + esc(r.name) + '</div>' +
+        '<div class="meta ell">★ ' + r.rating.toFixed(1) + ' · ' + esc(r.cuisine.split(',')[0]) + ' · ' + esc(r.dist) + '</div>' +
+      '</div>' +
+    '</div>').join('');
+
+  return '' +
+  '<section class="lane">' +
+    '<div class="lane-head">' +
+      '<span class="bolt-icon">' + icon('lightning', 15) + '</span>' +
+      '<h2>Bolt lane</h2>' +
+      '<span class="note">the three quickest kitchens to your door right now</span>' +
+    '</div>' +
+    '<div class="lane-grid">' + cards + '</div>' +
+  '</section>';
+}
+
+function webCard(r) {
+  const fav = !!state.favs[r.id];
+  return '' +
+  '<article class="card">' +
+    '<div class="media photo">' +
+      '<button class="save" data-act="fav" data-val="' + r.id + '" aria-pressed="' + fav + '" aria-label="Save ' + esc(r.name) + '">' +
+        icon(fav ? 'heartFill' : 'heart', 16) + '</button>' +
+      (inBoltLane(r) ? '<span class="lane-badge">' + icon('lightning', 10) + 'BOLT LANE</span>' : '') +
+    '</div>' +
+    '<div class="body">' +
+      '<div class="title"><span class="name">' + esc(r.name) + '</span>' +
+        '<span class="eta num">' + esc(r.mins) + ' min</span></div>' +
+      '<div class="meta">' + esc(r.cuisine) + ' · ' + esc(r.dist) + '</div>' +
+      '<div class="badges">' + badges(r) + '</div>' +
+    '</div>' +
+  '</article>';
+}
+
+function webMain() {
+  const list = visible();
+  const sorts = SORTS.map((name, i) =>
+    '<button class="sort-btn" data-act="sort" data-val="' + i + '" data-fast="' + (name === 'Fastest' ? 1 : 0) + '"' +
+      ' aria-pressed="' + (state.sort === i) + '">' + name + '</button>').join('');
+
+  const results = plural(list.length) + ' · ' + (state.cat === 'All' ? 'all categories' : state.cat.toLowerCase());
+
+  const body = list.length
+    ? '<div class="grid">' + list.map(webCard).join('') + '</div>'
+    : '<div class="empty">' +
+        '<div class="h">Nothing matches that yet.</div>' +
+        '<p>Loosen a filter and we\'ll find you something quick.</p>' +
+        '<button class="btn-outline" data-act="clear">Clear filters</button>' +
+      '</div>';
+
+  return '' +
+  '<main style="min-width:0">' +
+    (hasFilters() ? '' : webLane()) +
+    '<div class="resultbar"><h2>' + esc(results) + '</h2>' +
+      '<div class="right">' +
+        (hasFilters() ? '<button class="clear" data-act="clear">Clear filters</button>' : '') +
+        '<div class="sorts">' + sorts + '</div>' +
+      '</div>' +
+    '</div>' + body +
+  '</main>';
+}
+
+function webView() {
+  const fast = RESTAURANTS.filter(inBoltLane).length;
+  return '' +
+  '<div class="web">' + webNav() +
+    '<div class="page">' + webTracker() +
+      '<div class="titleblock">' +
+        '<h1 class="h1">Fast food, actually fast.</h1>' +
+        '<p class="lede">' + RESTAURANTS.length + ' kitchens open in Gulberg · ' + fast +
+          ' in the Bolt lane · average 24 min to your door</p>' +
+      '</div>' +
+      '<div class="shell">' + webRail() + webMain() + '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+/* --- mobile --------------------------------------------------------------- */
+const TABS = [
+  { name: 'Home', ico: 'house' }, { name: 'Search', ico: 'search' }, { name: 'Orders', ico: 'bag' },
+  { name: 'Saved', ico: 'heart' }, { name: 'Profile', ico: 'user' },
+];
+
+function mobRow(r) {
+  const fav = !!state.favs[r.id];
+  return '' +
+  '<article class="m-row">' +
+    '<div class="pic photo"></div>' +
+    '<div class="body">' +
+      '<div class="title"><div class="name">' + esc(r.name) + '</div>' +
+        '<button class="save" data-act="fav" data-val="' + r.id + '" aria-pressed="' + fav + '" aria-label="Save ' + esc(r.name) + '">' +
+          icon(fav ? 'heartFill' : 'heart', 18) + '</button></div>' +
+      '<div class="eta num">' + esc(r.mins) + ' min</div>' +
+      '<div class="meta">' + esc(r.cuisine) + ' · ' + esc(r.dist) + '</div>' +
+      '<div class="badges">' + badges(r, true) + '</div>' +
+    '</div>' +
+  '</article>';
+}
+
+function mobView() {
+  const list = visible('mobile');
+
+  const lane = boltLane().map(r =>
+    '<div class="m-lane-card">' +
+      '<div class="pic photo"></div>' +
+      '<div class="mins"><b class="num">' + etaLo(r) + '</b><span>min</span></div>' +
+      '<div><div class="name ell">' + esc(r.name) + '</div>' +
+        '<div class="meta ell">★ ' + r.rating.toFixed(1) + ' · ' + esc(r.cuisine.split(',')[0]) + '</div></div>' +
+    '</div>').join('');
+
+  const chips = CATS.map(name =>
+    '<button class="m-chip" data-act="cat" data-val="' + esc(name) + '" aria-pressed="' + (state.cat === name) + '">' +
+      esc(name) + '</button>').join('');
+
+  const tabs = TABS.map((t, i) =>
+    '<button class="tab" data-act="noop"' + (i === 0 ? ' aria-current="page"' : '') + '>' +
+      icon(t.ico, 21) + '<span class="name">' + t.name + '</span></button>').join('');
+
+  const body = list.length
+    ? list.map(mobRow).join('')
+    : '<div class="m-empty">' +
+        '<div class="h">Nothing matches that yet.</div>' +
+        '<p>Loosen a filter and we\'ll find you something quick.</p>' +
+        '<button class="btn-outline" data-act="clear">Clear filters</button>' +
+      '</div>';
+
+  return '' +
+  '<div class="mob">' +
+    '<div class="m-head">' +
+      '<button class="m-icon-btn m-profile" data-act="noop" aria-label="Profile">' + icon('user', 20) + '</button>' +
+      '<div class="m-brand">' +
+        '<div class="row">' + logo(22) +
+          '<span class="name">Bolt</span><span class="bar"></span>' +
+          '<button class="addr ell" data-act="noop">' + esc(ADDRESS) + ' ⌄</button>' +
+        '</div>' +
+        '<div class="avg">Average delivery near you: 24 min</div>' +
+      '</div>' +
+      '<button class="m-icon-btn m-searchbtn" data-act="noop" aria-label="Search">' + icon('search', 18) + '</button>' +
+    '</div>' +
+
+    '<section class="m-tracker" aria-label="Live order">' +
+      '<div class="top"><div class="mid">' +
+        '<div class="stage ell"><span class="name">' + esc(ORDER.steps[ORDER.stage].label) + '</span>' +
+          '<span class="rest"> · ' + esc(ORDER.kitchen) + '</span></div>' +
+        '<div class="sub ell">' + esc(ORDER.sub) + '</div>' +
+      '</div>' +
+      '<span class="figure num">' + ORDER.etaMins + '′</span></div>' +
+      '<div class="track-grid">' + trackerSteps(true) + '</div>' +
+      '<div class="ends"><span>Ordered ' + esc(ORDER.steps[0].time) + '</span>' +
+        '<span>Delivered ' + esc(ORDER.steps[3].time) + '</span></div>' +
+    '</section>' +
+
+    '<div class="m-lane-head"><div class="l">' + icon('lightning', 14) + '<h2>Bolt lane</h2></div>' +
+      '<span class="note">under 25 min, guaranteed</span></div>' +
+    '<div class="m-lane scrollhide">' + lane + '</div>' +
+
+    '<div class="m-chips scrollhide">' + chips + '</div>' +
+
+    '<div class="m-filters">' +
+      '<button class="m-bolt" data-act="bolt" aria-pressed="' + state.boltOnly + '">' + icon('lightning', 12) +
+        (state.boltOnly ? 'Bolt lane only · on' : 'Bolt lane only') + '</button>' +
+      '<button class="m-sort" data-act="cyclesort">' + icon('faders', 13) + SORTS[state.sort] + '</button>' +
+    '</div>' +
+
+    '<div class="m-count">' + esc(plural(list.length) + ' · sorted by ' + SORTS[state.sort].toLowerCase()) + '</div>' +
+    '<div class="m-list">' + body + '</div>' +
+    '<nav class="tabbar">' + tabs + '</nav>' +
+  '</div>';
+}
+
+/* --- render --------------------------------------------------------------- */
+const app = document.getElementById('app');
+
+function render() {
+  const active = document.activeElement;
+  const keepFocus = active && active.id === 'q';
+  const caret = keepFocus ? active.selectionStart : null;
+
+  app.innerHTML = webView() + mobView();
+
+  if (keepFocus) {
+    const q = document.getElementById('q');
+    if (q) { q.focus(); try { q.setSelectionRange(caret, caret); } catch (e) {} }
   }
+}
+
+app.addEventListener('click', e => {
+  const el = e.target.closest('[data-act]');
+  if (!el) return;
+  const val = el.dataset.val;
+  switch (el.dataset.act) {
+    case 'cat':       state.cat = val; break;
+    case 'sort':      state.sort = Number(val); break;
+    case 'cyclesort': state.sort = (state.sort + 1) % SORTS.length; break;
+    case 'bolt':      state.boltOnly = !state.boltOnly; break;
+    case 'price':     state.prices = { ...state.prices, [val]: !state.prices[val] }; break;
+    case 'rating':    state.minRating = Number(val); break;
+    case 'fav':       state.favs = { ...state.favs, [val]: !state.favs[val] }; break;
+    case 'clear':     Object.assign(state, { cat: 'All', boltOnly: false, prices: {}, minRating: 0, query: '' }); break;
+    default: return;                    // noop: not built, needs product decisions
+  }
+  render();
 });
 
-renderCart();
-renderOrders();
-setInterval(renderOrders, 1000);
+/* render() replaces the input element, which would throw away an in-progress
+   IME composition — so hold off until the composition commits. */
+app.addEventListener('input', e => {
+  if (e.target.id !== 'q' || e.isComposing) return;
+  state.query = e.target.value;
+  render();
+});
+
+app.addEventListener('compositionend', e => {
+  if (e.target.id !== 'q') return;
+  state.query = e.target.value;
+  render();
+});
+
+render();
 </script>
 </body>
 </html>

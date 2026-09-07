@@ -507,21 +507,28 @@ const icon = (name, size, cls) =>
 
 /* The mark. Halo strokes in the surface colour are what separate the shapes,
    so the paint order matters: halo, then fill. */
-const logo = (size, strokeScale) => {
-  const s = strokeScale;
+/* Stroke weights are authored per size, not scaled from one another — the 22px
+   mark carries proportionally heavier strokes so it holds up small. */
+const LOGO_STROKES = {
+  28: { rect: 4, draft: 4.6, wheel: 5, halo: 9 },
+  22: { rect: 5, draft: 5.2, wheel: 6, halo: 10 },
+};
+
+const logo = size => {
+  const s = LOGO_STROKES[size];
   return '' +
   '<svg width="' + size + '" height="' + size + '" viewBox="0 0 120 120" fill="none" style="flex:none" role="img" aria-label="Bolt">' +
-    '<rect x="4" y="4" width="112" height="112" rx="30" fill="#1b1d2c" stroke="#9184d9" stroke-width="' + (4 * s) + '"></rect>' +
+    '<rect x="4" y="4" width="112" height="112" rx="30" fill="#1b1d2c" stroke="#9184d9" stroke-width="' + s.rect + '"></rect>' +
     '<g transform="skewX(-8) translate(8 6)">' +
-      '<g stroke="#b6f21c" stroke-width="' + (4.6 * s) + '" stroke-linecap="round" opacity=".9">' +
+      '<g stroke="#b6f21c" stroke-width="' + s.draft + '" stroke-linecap="round" opacity=".9">' +
         '<path d="M14 44h20"></path><path d="M10 56h20"></path><path d="M16 68h10"></path>' +
       '</g>' +
-      '<g stroke="#9184d9" stroke-width="' + (5 * s) + '">' +
+      '<g stroke="#9184d9" stroke-width="' + s.wheel + '">' +
         '<circle cx="42" cy="78" r="11.5"></circle><circle cx="74" cy="78" r="11.5"></circle>' +
       '</g>' +
-      '<path d="M68 34L41 66h14l-7 25 30-38H60l8-19z" fill="#1b1d2c" stroke="#1b1d2c" stroke-width="' + (9 * s) + '" stroke-linejoin="round"></path>' +
+      '<path d="M68 34L41 66h14l-7 25 30-38H60l8-19z" fill="#1b1d2c" stroke="#1b1d2c" stroke-width="' + s.halo + '" stroke-linejoin="round"></path>' +
       '<path d="M68 34L41 66h14l-7 25 30-38H60l8-19z" fill="#b6f21c"></path>' +
-      '<circle cx="68" cy="24" r="12.5" fill="#1b1d2c" stroke="#1b1d2c" stroke-width="' + (9 * s) + '"></circle>' +
+      '<circle cx="68" cy="24" r="12.5" fill="#1b1d2c" stroke="#1b1d2c" stroke-width="' + s.halo + '"></circle>' +
       '<circle cx="68" cy="24" r="12.5" fill="#9184d9"></circle>' +
       '<path d="M78.6 17.4A12.5 12.5 0 0 1 74.6 34.6L71.2 29.2A6.1 6.1 0 0 0 73.2 20.8Z" fill="#1b1d2c" stroke="#1b1d2c" stroke-width="1.1" stroke-linejoin="round"></path>' +
     '</g>' +
@@ -548,13 +555,18 @@ const anyPrice = () => Object.values(state.prices).some(Boolean);
 const hasFilters = () =>
   state.cat !== 'All' || state.boltOnly || anyPrice() || state.minRating > 0 || !!state.query.trim();
 
-function visible() {
-  const q = state.query.trim().toLowerCase();
+/* Mobile carries only the category chips, the Bolt toggle and sort — it has no
+   search field, price control or rating control, so it must not be filtered by
+   them either. A query or price tier set on the desktop layout would otherwise
+   silently narrow the mobile list with nothing on screen to clear it. */
+function visible(scope) {
+  const wide = scope !== 'mobile';
+  const q = wide ? state.query.trim().toLowerCase() : '';
   let out = RESTAURANTS.filter(r =>
     (state.cat === 'All' || r.cat === state.cat) &&
     (!state.boltOnly || inBoltLane(r)) &&
-    (!anyPrice() || state.prices[r.price]) &&
-    r.rating >= state.minRating &&
+    (!wide || !anyPrice() || state.prices[r.price]) &&
+    (!wide || r.rating >= state.minRating) &&
     (!q || (r.name + ' ' + r.cuisine + ' ' + r.cat).toLowerCase().includes(q))
   );
   const by = SORTS[state.sort];
@@ -611,7 +623,7 @@ function trackerSteps(compact) {
 function webNav() {
   return '' +
   '<header class="nav"><div class="nav-in">' +
-    '<div class="brand">' + logo(28, 1) + '<span class="brand-name">Bolt</span></div>' +
+    '<div class="brand">' + logo(28) + '<span class="brand-name">Bolt</span></div>' +
     '<button class="addr" data-act="noop">' +
       '<span class="pin">' + icon('mapPin', 15) + '</span>' +
       '<span class="pre">Deliver to</span><span>' + esc(ADDRESS) + '</span>' +
@@ -783,7 +795,7 @@ function mobRow(r) {
 }
 
 function mobView() {
-  const list = visible();
+  const list = visible('mobile');
 
   const lane = boltLane().map(r =>
     '<div class="m-lane-card">' +
@@ -814,7 +826,7 @@ function mobView() {
     '<div class="m-head">' +
       '<button class="m-icon-btn m-profile" data-act="noop" aria-label="Profile">' + icon('user', 20) + '</button>' +
       '<div class="m-brand">' +
-        '<div class="row">' + logo(22, 1.15) +
+        '<div class="row">' + logo(22) +
           '<span class="name">Bolt</span><span class="bar"></span>' +
           '<button class="addr ell" data-act="noop">' + esc(ADDRESS) + ' ⌄</button>' +
         '</div>' +
@@ -887,7 +899,15 @@ app.addEventListener('click', e => {
   render();
 });
 
+/* render() replaces the input element, which would throw away an in-progress
+   IME composition — so hold off until the composition commits. */
 app.addEventListener('input', e => {
+  if (e.target.id !== 'q' || e.isComposing) return;
+  state.query = e.target.value;
+  render();
+});
+
+app.addEventListener('compositionend', e => {
   if (e.target.id !== 'q') return;
   state.query = e.target.value;
   render();
